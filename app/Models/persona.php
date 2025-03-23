@@ -8,21 +8,37 @@ use Illuminate\Auth\Authenticatable as AuthenticatableTrait;
 
 class Persona extends Model implements Authenticatable
 {
-    use HasFactory, AuthenticatableTrait;
+    use HasFactory;
 
-    // Nombre de la tabla en la base de datos
     protected $table = 'personas';
 
-    // Los campos que pueden ser asignados masivamente
     protected $fillable = [
-        'nom', 'ap', 'am', 'correo', 'contrasena', 'id_rol'
+        'nom',
+        'ap',
+        'am',
+        'telefono',
+        'correo',
+        'contrasena',
+        'id_rol',
     ];
 
-    // Los campos que deben ser ocultados cuando se convierten a un array o JSON
-    protected $hidden = [
-        'contrasena', 'remember_token'
-    ];
+    public function rol()
+    {
+        return $this->belongsTo(Role::class, 'id_rol');
+    }
 
-    // Si no estás usando un incremento automático para el campo 'id_persona'
-    protected $primaryKey = 'id_persona';
+    public function proveedor()
+    {
+        return $this->hasOne(Proveedor::class, 'id_persona');
+    }
+
+    public function empleado()
+    {
+        return $this->hasOne(Empleado::class, 'id_persona');
+    }
+
+    public function socio()
+    {
+        return $this->hasOne(Socio::class, 'id_persona');
+    }
 }

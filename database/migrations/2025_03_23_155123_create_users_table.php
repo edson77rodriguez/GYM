@@ -16,9 +16,8 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
-            $table->integer('id_persona')->index('fk_users_personas');
-
-            $table->foreign('id_persona')->references('id_persona')->on('personas')->onUpdate('restrict')->onDelete('cascade');
+            $table->unsignedBigInteger('id_persona'); // Usamos unsignedBigInteger para que coincida con el tipo de id_rol en roles
+            $table->foreign('id_persona')->references('id_persona')->on('personas')->onUpdate('restrict')->onDelete('restrict');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

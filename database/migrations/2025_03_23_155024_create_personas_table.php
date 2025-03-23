@@ -12,17 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('personas', function (Blueprint $table) {
-            $table->integer('id_persona', true);
-            $table->string('nom');
-            $table->string('ap');
-            $table->string('am');
-            $table->string('telefono');
-            $table->string('correo')->unique();
-            $table->string('contrasena');
-            $table->integer('id_rol')->index('id_rol');
-
+            $table->id('id_persona');
+            $table->string('nom', 50);
+            $table->string('ap', 50);
+            $table->string('am', 50);
+            $table->string('telefono', 15);
+            $table->string('correo', 30)->unique();
+            $table->string('contrasena', 60);
+            $table->unsignedBigInteger('id_rol'); // Usamos unsignedBigInteger para que coincida con el tipo de id_rol en roles
             $table->foreign('id_rol')->references('id_rol')->on('roles')->onUpdate('restrict')->onDelete('restrict');
+            $table->timestamps();
         });
+        
     }
 
     public function down(): void
