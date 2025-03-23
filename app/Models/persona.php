@@ -8,9 +8,10 @@ use Illuminate\Auth\Authenticatable as AuthenticatableTrait;
 
 class Persona extends Model implements Authenticatable
 {
-    use HasFactory;
+    use HasFactory, AuthenticatableTrait;
 
     protected $table = 'personas';
+    protected $primaryKey = 'id_persona'; // Indicar la clave primaria correcta
 
     protected $fillable = [
         'nom',
@@ -24,7 +25,7 @@ class Persona extends Model implements Authenticatable
 
     public function rol()
     {
-        return $this->belongsTo(Role::class, 'id_rol');
+        return $this->belongsTo(Rol::class, 'id_rol', 'id_rol');  // Definir correctamente la clave foránea
     }
 
     public function proveedor()
@@ -40,5 +41,10 @@ class Persona extends Model implements Authenticatable
     public function socio()
     {
         return $this->hasOne(Socio::class, 'id_persona');
+    }
+
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id_persona');
     }
 }

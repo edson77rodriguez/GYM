@@ -13,7 +13,7 @@ class Rol extends Model
     protected $fillable = [
         'desc_rol',
     ];
-
+    protected $primaryKey = 'persona_id';
     public function personas()
     {
         return $this->hasMany(Persona::class, 'id_rol');

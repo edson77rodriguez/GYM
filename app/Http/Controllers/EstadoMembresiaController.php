@@ -7,59 +7,67 @@ use Illuminate\Http\Request;
 
 class EstadoMembresiaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Estado_Membresia $estado_Membresia)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Estado_Membresia $estado_Membresia)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Estado_Membresia $estado_Membresia)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Estado_Membresia $estado_Membresia)
-    {
-        //
-    }
+      // Mostrar todos los estados de membresía
+      public function index()
+      {
+          $estadosMembresias = Estado_Membresia::all();
+          return view('estado_membresias.index', compact('estadosMembresias'));
+      }
+  
+      // Mostrar formulario para crear un nuevo estado de membresía
+      public function create()
+      {
+          return view('estado_membresias.create');
+      }
+  
+      // Guardar un nuevo estado de membresía
+      public function store(Request $request)
+      {
+          $request->validate([
+              'nom_estado' => 'required|string|max:255',
+          ]);
+  
+          Estado_Membresia::create($request->all());
+  
+          return redirect()->route('estado_membresias.index')
+                           ->with('success', 'Estado de membresía creado exitosamente.');
+      }
+  
+      // Mostrar el estado de membresía seleccionado
+      public function show($id)
+      {
+          $estadoMembresia = Estado_Membresia::findOrFail($id);
+          return view('estado_membresias.show', compact('estadoMembresia'));
+      }
+  
+      // Mostrar formulario para editar un estado de membresía
+      public function edit($id)
+      {
+          $estadoMembresia = Estado_Membresia::findOrFail($id);
+          return view('estado_membresias.edit', compact('estadoMembresia'));
+      }
+  
+      // Actualizar un estado de membresía
+      public function update(Request $request, $id)
+      {
+          $request->validate([
+              'nom_estado' => 'required|string|max:255',
+          ]);
+  
+          $estadoMembresia = Estado_Membresia::findOrFail($id);
+          $estadoMembresia->update($request->all());
+  
+          return redirect()->route('estado_membresias.index')
+                           ->with('success', 'Estado de membresía actualizado exitosamente.');
+      }
+  
+      // Eliminar un estado de membresía
+      public function destroy($id)
+      {
+          $estadoMembresia = Estado_Membresia::findOrFail($id);
+          $estadoMembresia->delete();
+  
+          return redirect()->route('estado_membresias.index')
+                           ->with('success', 'Estado de membresía eliminado exitosamente.');
+      }
 }

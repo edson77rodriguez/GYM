@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 class Mantenimiento extends Model
 {
     use HasFactory;
@@ -17,6 +19,7 @@ class Mantenimiento extends Model
         'desc_estado',
     ];
 
+    // Relaciones
     public function equipo()
     {
         return $this->belongsTo(Equipo::class, 'id_equipo');
@@ -25,5 +28,11 @@ class Mantenimiento extends Model
     public function empleado()
     {
         return $this->belongsTo(Empleado::class, 'id_empleado');
+    }
+
+    // Para convertir la fecha programada en un formato legible
+    public function getFechaProgramadaAttribute($value)
+    {
+        return Carbon::parse($value)->format('d-m-Y');  // Puedes cambiar el formato si lo deseas
     }
 }

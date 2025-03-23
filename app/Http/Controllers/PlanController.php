@@ -7,59 +7,71 @@ use Illuminate\Http\Request;
 
 class PlanController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Mostrar todos los planes
     public function index()
     {
-        //
+        $planes = Plan::all();
+        return view('planes.index', compact('planes'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    // Mostrar formulario para crear un nuevo plan
     public function create()
     {
-        //
+        return view('planes.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Guardar un nuevo plan
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nom_plan' => 'required|string|max:50|unique:planes,nom_plan',
+            'desc_plan' => 'required|string',
+            'costo' => 'required|numeric|min:0',
+        ]);
+
+        Plan::create($request->all());
+
+        return redirect()->route('planes.index')
+                         ->with('success', 'Plan creado exitosamente.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Plan $plan)
+    // Mostrar el plan seleccionado
+    public function show($id)
     {
-        //
+        $plan = Plan::findOrFail($id);
+        return view('planes.show', compact('plan'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Plan $plan)
+    // Mostrar formulario para editar un plan
+    public function edit($id)
     {
-        //
+        $plan = Plan::findOrFail($id);
+        return view('planes.edit', compact('plan'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Plan $plan)
+    // Actualizar un plan
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nom_plan' => 'required|string|max:50|unique:planes,nom_plan,' . $id,
+            'desc_plan' => 'required|string',
+            'costo' => 'required|numeric|min:0',
+        ]);
+
+        $plan = Plan::findOrFail($id);
+        $plan->update($request->all());
+
+        return redirect()->route('planes.index')
+                         ->with('success', 'Plan actualizado exitosamente.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Plan $plan)
+    // Eliminar un plan
+    public function destroy($id)
     {
-        //
+        $plan = Plan::findOrFail($id);
+        $plan->delete();
+
+        return redirect()->route('planes.index')
+                         ->with('success', 'Plan eliminado exitosamente.');
     }
 }

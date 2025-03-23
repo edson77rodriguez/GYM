@@ -3,63 +3,57 @@
 namespace App\Http\Controllers;
 
 use App\Models\Mantenimiento;
+use App\Models\Equipo;
+use App\Models\Empleado;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class MantenimientoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Mostrar lista de mantenimientos
     public function index()
     {
-        //
+        $mantenimientos = Mantenimiento::with(['equipo', 'empleado'])->get();
+        $equipos = Equipo::all();
+        $empleados = Empleado::all();
+        return view('mantenimientos.index', compact('mantenimientos', 'equipos', 'empleados'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Guardar un nuevo mantenimiento
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'id_equipo' => 'required|exists:equipos,id_equipo',
+            'id_empleado' => 'required|exists:empleados,id_empleado',
+            'fecha_programada' => 'required|date',
+            'desc_estado' => 'nullable|string',
+        ]);
+
+        Mantenimiento::create($validatedData);
+
+        return redirect()->route('mantenimientos.index')->with('success', 'Mantenimiento creado correctamente.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Mantenimiento $mantenimiento)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Mantenimiento $mantenimiento)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
+    // Actualizar un mantenimiento
     public function update(Request $request, Mantenimiento $mantenimiento)
     {
-        //
+        $validatedData = $request->validate([
+            'id_equipo' => 'required|exists:equipos,id_equipo',
+            'id_empleado' => 'required|exists:empleados,id_empleado',
+            'fecha_programada' => 'required|date',
+            'desc_estado' => 'nullable|string',
+        ]);
+
+        $mantenimiento->update($validatedData);
+
+        return redirect()->route('mantenimientos.index')->with('success', 'Mantenimiento actualizado correctamente.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    // Eliminar un mantenimiento
     public function destroy(Mantenimiento $mantenimiento)
     {
-        //
+        $mantenimiento->delete();
+
+        return redirect()->route('mantenimientos.index')->with('success', 'Mantenimiento eliminado correctamente.');
     }
 }

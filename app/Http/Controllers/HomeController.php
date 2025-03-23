@@ -23,6 +23,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        // Obtén el usuario autenticado
+        $user = auth()->user();
+
+        // Pasa el usuario a la vista
+        return view('home', compact('user'));
     }
 }
+

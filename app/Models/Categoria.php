@@ -9,8 +9,9 @@ class Categoria extends Model
     use HasFactory;
 
     protected $table = 'categorias';
-
-    protected $fillable = [
+    protected $primaryKey = 'id_categoria';  // Aquí especificamos el nombre de la columna clave primaria
+    public $incrementing = false;  
+        protected $fillable = [
         'nom_cat',
     ];
 

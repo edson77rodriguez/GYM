@@ -2,64 +2,72 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Equipo;
 use Illuminate\Http\Request;
+use App\Models\Equipo;
+use Illuminate\Support\Facades\Storage;
 
 class EquipoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        // Obtener todos los equipos
+        $equipos = Equipo::all();
+        return view('equipos.index', compact('equipos'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        // Validar los datos enviados por el formulario
+        $validatedData = $request->validate([
+            'nom_equipo' => 'required|max:255',
+            'desc_equipo' => 'nullable|string',
+            'imagen_equipo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        // Si hay una imagen, la guardamos
+        if ($request->hasFile('imagen_equipo')) {
+            $validatedData['imagen_equipo'] = $request->file('imagen_equipo')->store('images', 'public');
+        }
+
+        // Crear el nuevo equipo en la base de datos
+        Equipo::create($validatedData);
+
+        return redirect()->route('equipos.index')->with('success', 'Equipo creado correctamente.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Equipo $equipo)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Equipo $equipo)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Equipo $equipo)
     {
-        //
+        // Validar los datos enviados por el formulario
+        $validatedData = $request->validate([
+            'nom_equipo' => 'required|max:255',
+            'desc_equipo' => 'nullable|string',
+            'imagen_equipo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        // Si hay una imagen, eliminamos la anterior y guardamos la nueva
+        if ($request->hasFile('imagen_equipo')) {
+            if ($equipo->imagen_equipo) {
+                Storage::delete('public/' . $equipo->imagen_equipo);
+            }
+            $validatedData['imagen_equipo'] = $request->file('imagen_equipo')->store('images', 'public');
+        }
+
+        // Actualizar el equipo
+        $equipo->update($validatedData);
+
+        return redirect()->route('equipos.index')->with('success', 'Equipo actualizado correctamente.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Equipo $equipo)
     {
-        //
+        // Eliminar la imagen del equipo si existe
+        if ($equipo->imagen_equipo) {
+            Storage::delete('public/' . $equipo->imagen_equipo);
+        }
+
+        // Eliminar el equipo de la base de datos
+        $equipo->delete();
+
+        return redirect()->route('equipos.index')->with('success', 'Equipo eliminado correctamente.');
     }
 }

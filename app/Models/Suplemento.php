@@ -9,7 +9,7 @@ class Suplemento extends Model
     use HasFactory;
 
     protected $table = 'suplementos';
-
+    protected $primaryKey = 'id_suplemento';
     protected $fillable = [
         'nom_suplemento',
         'id_categoria',
@@ -22,12 +22,12 @@ class Suplemento extends Model
 
     public function categoria()
     {
-        return $this->belongsTo(Categoria::class, 'id_categoria');
+        return $this->belongsTo(Categoria::class, 'id_categoria', 'id_categoria'); // Especifica la columna de la relación
     }
 
     public function marca()
     {
-        return $this->belongsTo(Marca::class, 'id_marca');
+        return $this->belongsTo(Marca::class, 'id_marca', 'id_marca'); // Relación con la tabla marcas
     }
 
     public function detallesVentas()

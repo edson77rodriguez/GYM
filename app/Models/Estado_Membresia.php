@@ -9,7 +9,7 @@ class Estado_Membresia extends Model
     use HasFactory;
 
     protected $table = 'estados_membresias';
-
+    protected $primaryKey = 'id_estado_mem';
     protected $fillable = [
         'nom_estado',
     ];

@@ -9,7 +9,7 @@ class Plan extends Model
     use HasFactory;
 
     protected $table = 'planes';
-
+    protected $primaryKey = 'id_plan';
     protected $fillable = [
         'nom_plan',
         'desc_plan',

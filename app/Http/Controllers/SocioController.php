@@ -2,64 +2,58 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Socio;
 use Illuminate\Http\Request;
+use App\Models\Socio;
+use App\Models\Persona;
+use App\Models\Estado_Membresia;
+use Carbon\Carbon; 
 
 class SocioController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Mostrar lista de socios
     public function index()
     {
-        //
+        $socios = Socio::with(['persona', 'estadoMembresia'])->get();
+        $personas = Persona::all();
+        $estados = Estado_Membresia::all();
+        return view('socios.index', compact('socios', 'personas', 'estados'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Guardar un nuevo socio
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'id_persona' => 'required|exists:personas,id_persona',
+            'fecha_inscripcion' => 'required|date',
+            'fecha_vencimiento' => 'required|date',
+            'id_estado_mem' => 'required|exists:estados_membresias,id_estado_mem',
+        ]);
+
+        Socio::create($validatedData);
+
+        return redirect()->route('socios.index')->with('success', 'Socio creado correctamente.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Socio $socio)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Socio $socio)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
+    // Actualizar un socio
     public function update(Request $request, Socio $socio)
     {
-        //
+        $validatedData = $request->validate([
+            'id_persona' => 'required|exists:personas,id_persona',
+            'fecha_inscripcion' => 'required|date',
+            'fecha_vencimiento' => 'required|date',
+            'id_estado_mem' => 'required|exists:estados_membresias,id_estado_mem',
+        ]);
+
+        $socio->update($validatedData);
+
+        return redirect()->route('socios.index')->with('success', 'Socio actualizado correctamente.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    // Eliminar un socio
     public function destroy(Socio $socio)
     {
-        //
+        $socio->delete();
+
+        return redirect()->route('socios.index')->with('success', 'Socio eliminado correctamente.');
     }
 }
