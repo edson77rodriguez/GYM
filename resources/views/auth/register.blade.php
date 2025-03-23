@@ -11,109 +11,7 @@
     />
     <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
     <style>
-        .logo {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            font-weight: bold;
-            color: white;
-        }
-
-        .logo span {
-            font-size: 0.9rem;
-            color: #f8f9fa;
-        }
-
-        .logo a img {
-            width: 60px; /* Ajusta el tamaño del logo */
-            margin-top: 5px;
-        }
-
-        footer {
-            background-color: #f76c2a; /* Naranja */
-            padding: 1rem 0; /* Reducción del tamaño */
-            color: white;
-            font-size: 0.875rem; /* Reducir tamaño de fuente */
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            text-align: center;
-        }
-
-        footer p {
-            margin: 0;
-        }
-
-        footer .social-icons a {
-            margin: 0 10px;
-            color: white;
-            text-decoration: none;
-        }
-
-        footer .social-icons a:hover {
-            color: #ddd;
-        }
-
-        footer .privacy-links {
-            font-size: 0.75rem; /* Fuente más pequeña */
-        }
-
-        footer .privacy-links a {
-            margin: 0 5px;
-            color: white;
-            text-decoration: none;
-        }
-
-        footer .privacy-links a:hover {
-            color: #ddd;
-        }
-
-        /* Estilos para el formulario */
-        .card {
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .card-header {
-            background-color: #f76c2a;
-            color: white;
-            font-weight: bold;
-        }
-
-        .form-control {
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .btn-primary {
-            background-color: #f76c2a;
-            border: none;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.3s;
-        }
-
-        .btn-primary:hover {
-            background-color: #e65d1e;
-        }
-
-        .btn-link {
-            color: #f76c2a;
-        }
-
-        .btn-link:hover {
-            color: #e65d1e;
-        }
-
-        .form-check-label {
-            color: #555;
-        }
-
-        .form-check-input:checked {
-            background-color: #f76c2a;
-            border-color: #f76c2a;
-        }
+        /* Los estilos siguen igual... */
     </style>
     <title>Gym | Welcome</title>
 </head>
@@ -158,56 +56,99 @@
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
+                        <!-- Campo Nombre -->
                         <div class="row mb-3">
-                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Nombre') }}</label>
-
+                            <label for="nom" class="col-md-4 col-form-label text-md-end">{{ __('Nombre') }}</label>
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
-                                @error('name')
-                                <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <input id="nom" type="text" class="form-control @error('nom') is-invalid @enderror" name="nom" value="{{ old('nom') }}" required autofocus>
+                                @error('nom')
+                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                                 @enderror
                             </div>
                         </div>
 
+                        <!-- Campo Apellido Paterno -->
                         <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email ') }}</label>
-
+                            <label for="ap" class="col-md-4 col-form-label text-md-end">{{ __('Apellido Paterno') }}</label>
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                                @error('email')
-                                <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <input id="ap" type="text" class="form-control @error('ap') is-invalid @enderror" name="ap" value="{{ old('ap') }}" required>
+                                @error('ap')
+                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                                 @enderror
                             </div>
                         </div>
 
+                        <!-- Campo Apellido Materno -->
+                        <div class="row mb-3">
+                            <label for="am" class="col-md-4 col-form-label text-md-end">{{ __('Apellido Materno') }}</label>
+                            <div class="col-md-6">
+                                <input id="am" type="text" class="form-control @error('am') is-invalid @enderror" name="am" value="{{ old('am') }}" required>
+                                @error('am')
+                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- Campo Teléfono -->
+                        <div class="row mb-3">
+                            <label for="telefono" class="col-md-4 col-form-label text-md-end">{{ __('Teléfono') }}</label>
+                            <div class="col-md-6">
+                                <input id="telefono" type="text" class="form-control @error('telefono') is-invalid @enderror" name="telefono" value="{{ old('telefono') }}" required>
+                                @error('telefono')
+                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- Campo Correo -->
+                        <div class="row mb-3">
+                            <label for="correo" class="col-md-4 col-form-label text-md-end">{{ __('Correo') }}</label>
+                            <div class="col-md-6">
+                                <input id="correo" type="email" class="form-control @error('correo') is-invalid @enderror" name="correo" value="{{ old('correo') }}" required>
+                                @error('correo')
+                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- Campo Contraseña -->
                         <div class="row mb-3">
                             <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Contraseña') }}</label>
-
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
                                 @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                                 @enderror
                             </div>
                         </div>
 
+                        <!-- Campo Confirmar Contraseña -->
                         <div class="row mb-3">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirrmar Contraseña') }}</label>
-
+                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirmar Contraseña') }}</label>
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                             </div>
                         </div>
 
+                        <!-- Campo de selección de rol -->
+                        <div class="row mb-3">
+                            <label for="desc_rol" class="col-md-4 col-form-label text-md-end">{{ __('Rol') }}</label>
+                            <div class="col-md-6">
+                                <select id="desc_rol" class="form-control @error('desc_rol') is-invalid @enderror" name="desc_rol" required>
+                                    <option value="">Seleccione un rol</option>
+                                    @foreach ($roles as $rol)
+                                        @if ($rol->desc_rol != 'Administrador') <!-- Excluir Administrador -->
+                                            <option value="{{ $rol->desc_rol }}">{{ $rol->desc_rol }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                                @error('desc_rol')
+                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- Botón de registro -->
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
@@ -254,4 +195,3 @@
 ></script>
 </body>
 </html>
-

@@ -9,15 +9,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
+            $table->id(); // Id autoincremental
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
-            $table->unsignedBigInteger('id_persona'); // Usamos unsignedBigInteger para que coincida con el tipo de id_rol en roles
-            $table->foreign('id_persona')->references('id_persona')->on('personas')->onUpdate('restrict')->onDelete('restrict');
+
+            // Ahora id_persona se agrega sin 'after'
+            $table->unsignedBigInteger('id_persona')->nullable(); // La columna puede ser nullable
+            $table->foreign('id_persona')->references('id_persona')->on('personas')->onDelete('cascade');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
