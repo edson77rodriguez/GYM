@@ -13,7 +13,7 @@ class SocioController extends Controller
     // Mostrar lista de socios
     public function index()
     {
-        $socios = Socio::with(['persona', 'estadoMembresia'])->get();
+        $socios = Socio::all();
         $personas = Persona::all();
         $estados = Estado_Membresia::all();
         return view('socios.index', compact('socios', 'personas', 'estados'));

@@ -7,59 +7,67 @@ use Illuminate\Http\Request;
 
 class MarcaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Mostrar todas las marcas
     public function index()
     {
-        //
+        $marcas = Marca::all();
+        return view('marcas.index', compact('marcas'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    // Mostrar formulario para crear una nueva marca
     public function create()
     {
-        //
+        return view('marcas.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Guardar una nueva marca
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nom_marca' => 'required|string|max:255',
+        ]);
+
+        Marca::create($request->all());
+
+        return redirect()->route('marcas.index')
+                         ->with('register', 'La marca ha sido creada exitosamente.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Marca $marca)
+    // Mostrar los detalles de una marca seleccionada
+    public function show($id)
     {
-        //
+        $marca = Marca::findOrFail($id);
+        return view('marcas.show', compact('marca'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Marca $marca)
+    // Mostrar formulario para editar una marca
+    public function edit($id)
     {
-        //
+        $marca = Marca::findOrFail($id);
+        return view('marcas.edit', compact('marca'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Marca $marca)
+    // Actualizar una marca existente
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nom_marca' => 'required|string|max:255',
+        ]);
+
+        $marca = Marca::findOrFail($id);
+        $marca->update($request->all());
+
+        return redirect()->route('marcas.index')
+                         ->with('modify', 'La marca ha sido actualizada exitosamente.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Marca $marca)
+    // Eliminar una marca
+    public function destroy($id)
     {
-        //
+        $marca = Marca::findOrFail($id);
+        $marca->delete();
+
+        return redirect()->route('marcas.index')
+                         ->with('destroy', 'La marca ha sido eliminada exitosamente.');
     }
 }

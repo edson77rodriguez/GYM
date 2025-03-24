@@ -9,6 +9,7 @@ class Venta extends Model
     use HasFactory;
 
     protected $table = 'ventas';
+    protected $primaryKey = 'id_venta';
 
     protected $fillable = [
         'id_socio',
@@ -23,6 +24,6 @@ class Venta extends Model
 
     public function detallesVentas()
     {
-        return $this->hasMany(DetalleVenta::class, 'id_venta');
+        return $this->hasMany(Detalle_Venta::class, 'id_venta');
     }
 }

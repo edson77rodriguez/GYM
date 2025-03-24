@@ -38,10 +38,11 @@ class Persona extends Model implements Authenticatable
         return $this->hasOne(Empleado::class, 'id_persona');
     }
 
-    public function socio()
+    public function socios()
     {
-        return $this->hasOne(Socio::class, 'id_persona');
+        return $this->hasMany(Socio::class, 'id_persona');
     }
+    
 
     public function user()
     {

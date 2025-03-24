@@ -141,7 +141,7 @@
                         <label class="form-label">Socio</label>
                         <select name="id_socio" class="form-select" required>
                             @foreach ($socios as $socio)
-                                <option value="{{ $socio->id_socio }}">{{ $socio->nombre }} {{ $socio->apellido }}</option>
+                                <option value="{{ $socio->id_socio }}">{{ $socio->persona->nom }} {{ $socio->persona->ap }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -159,7 +159,7 @@
                             <div class="col-md-6">
                                 <select name="detalles_venta[0][id_suplemento]" class="form-select">
                                     @foreach ($suplementos as $suplemento)
-                                        <option value="{{ $suplemento->id_suplemento }}">{{ $suplemento->nombre }}</option>
+                                        <option value="{{ $suplemento->id_suplemento }}">{{ $suplemento->nom_suplemento }}</option>
                                     @endforeach
                                 </select>
                             </div>

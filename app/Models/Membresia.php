@@ -10,6 +10,7 @@ class Membresia extends Model
     use HasFactory;
 
     protected $table = 'membresias';
+    protected $primaryKey = 'id_membresia';
 
     protected $fillable = [
         'id_socio',

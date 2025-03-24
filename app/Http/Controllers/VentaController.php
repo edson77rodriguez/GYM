@@ -22,24 +22,23 @@ class VentaController extends Controller
 
     // Almacenar una nueva venta
     public function store(Request $request)
-{
-    // Validación de los datos
-    $validatedData = $request->validate([
-        'id_socio' => 'required|exists:socios,id_socio',
-        'fecha_venta' => 'required|date',
-    ]);
+    {
+        // Validación de los datos
+        $validatedData = $request->validate([
+            'id_socio' => 'required|exists:socios,id_socio',
+            'fecha_venta' => 'required|date',
+        ]);
 
-    // Crear la venta con monto 0
-    $venta = Venta::create([
-        'id_socio' => $validatedData['id_socio'],
-        'fecha_venta' => $validatedData['fecha_venta'],
-        'monto' => 0, // El monto inicial es 0
-    ]);
+        // Crear la venta con monto inicial 0
+        $venta = Venta::create([
+            'id_socio' => $validatedData['id_socio'],
+            'fecha_venta' => $validatedData['fecha_venta'],
+            'monto' => 0, 
+        ]);
 
-    // Redirigir a la página de detalles de la venta
-    return redirect()->route('ventas.detalles', $venta->id_venta)->with('success', 'Venta registrada correctamente.');
-}
-
+        return redirect()->route('ventas.detalles', $venta->id_venta)
+                         ->with('success', 'Venta registrada correctamente.');
+    }
 
     // Actualizar una venta
     public function update(Request $request, Venta $venta)
@@ -48,85 +47,92 @@ class VentaController extends Controller
         $validatedData = $request->validate([
             'id_socio' => 'required|exists:socios,id_socio',
             'fecha_venta' => 'required|date',
-            'monto' => 'required|numeric|min:0',
             'detalles_venta' => 'required|array',
             'detalles_venta.*.id_suplemento' => 'required|exists:suplementos,id_suplemento',
             'detalles_venta.*.cantidad' => 'required|integer|min:1',
-            'detalles_venta.*.precio' => 'required|numeric|min:0',
         ]);
 
         // Actualizar la venta
-        $venta->update($validatedData);
+        $venta->update([
+            'id_socio' => $validatedData['id_socio'],
+            'fecha_venta' => $validatedData['fecha_venta'],
+        ]);
 
-        // Eliminar los detalles de la venta antiguos y crear los nuevos
-        $venta->detallesVentas()->delete();  // Eliminar detalles anteriores
+        // Eliminar los detalles de la venta antiguos
+        $venta->detallesVentas()->delete();
+
+        // Recalcular el total
+        $total = 0;
+
         foreach ($request->detalles_venta as $detalle) {
+            $suplemento = Suplemento::findOrFail($detalle['id_suplemento']);
+            $subtotal = $detalle['cantidad'] * $suplemento->precio;
+
             Detalle_Venta::create([
                 'id_venta' => $venta->id_venta,
-                'id_suplemento' => $detalle['id_suplemento'],
+                'id_suplemento' => $suplemento->id_suplemento,
                 'cantidad' => $detalle['cantidad'],
-                'precio' => $detalle['precio'],
+                'subtotal' => $subtotal,
             ]);
+
+            $total += $subtotal;
         }
 
-        // Redirigir con mensaje de éxito
+        // Actualizar el monto total de la venta
+        $venta->update(['monto' => $total]);
+
         return redirect()->route('ventas.index')->with('success', 'Venta actualizada correctamente.');
     }
 
     // Eliminar una venta
     public function destroy(Venta $venta)
     {
-        // Eliminar los detalles de la venta
         $venta->detallesVentas()->delete();
-
-        // Eliminar la venta
         $venta->delete();
 
-        // Redirigir con mensaje de éxito
         return redirect()->route('ventas.index')->with('success', 'Venta eliminada correctamente.');
     }
+
+    // Mostrar detalles de una venta
     public function detalles($id_venta)
-{
-    $venta = Venta::findOrFail($id_venta);
-    $suplementos = Suplemento::all();
+    {
+        $venta = Venta::findOrFail($id_venta);
+        $suplementos = Suplemento::all();
 
-    return view('ventas.detalles', compact('venta', 'suplementos'));
-}
-
-public function storeDetalles(Request $request, $id_venta)
-{
-    // Validación de los datos
-    $validatedData = $request->validate([
-        'detalles_venta' => 'required|array',
-        'detalles_venta.*.id_suplemento' => 'required|exists:suplementos,id_suplemento',
-        'detalles_venta.*.cantidad' => 'required|integer|min:1',
-        'detalles_venta.*.precio' => 'required|numeric|min:0',
-    ]);
-
-    // Obtener la venta
-    $venta = Venta::findOrFail($id_venta);
-
-    // Inicializar el monto total
-    $total = 0;
-
-    // Crear los detalles de la venta
-    foreach ($request->detalles_venta as $detalle) {
-        Detalle_Venta::create([
-            'id_venta' => $venta->id_venta,
-            'id_suplemento' => $detalle['id_suplemento'],
-            'cantidad' => $detalle['cantidad'],
-            'precio' => $detalle['precio'],
-        ]);
-
-        // Sumar al total
-        $total += $detalle['cantidad'] * $detalle['precio'];
+        return view('ventas.detalles', compact('venta', 'suplementos'));
     }
 
-    // Actualizar el monto de la venta
-    $venta->update(['monto' => $total]);
+    // Almacenar detalles de una venta
+    public function storeDetalles(Request $request, $id_venta)
+    {
+        // Validación de los datos
+        $validatedData = $request->validate([
+            'detalles_venta' => 'required|array',
+            'detalles_venta.*.id_suplemento' => 'required|exists:suplementos,id_suplemento',
+            'detalles_venta.*.cantidad' => 'required|integer|min:1',
+        ]);
 
-    // Redirigir a la página de ventas con el monto actualizado
-    return redirect()->route('ventas.index')->with('success', 'Detalles de venta registrados correctamente.');
-}
+        // Obtener la venta
+        $venta = Venta::findOrFail($id_venta);
+        $total = 0;
 
+        foreach ($request->detalles_venta as $detalle) {
+            $suplemento = Suplemento::findOrFail($detalle['id_suplemento']);
+            $subtotal = $detalle['cantidad'] * $suplemento->precio;
+
+            Detalle_Venta::create([
+                'id_venta' => $venta->id_venta,
+                'id_suplemento' => $suplemento->id_suplemento,
+                'cantidad' => $detalle['cantidad'],
+                'subtotal' => $subtotal,
+            ]);
+
+            $total += $subtotal;
+        }
+
+        // Actualizar el monto total de la venta
+        $venta->update(['monto' => $total]);
+
+        return redirect()->route('ventas.index')->with('success', 'Detalles de venta registrados correctamente.');
+    }
 }

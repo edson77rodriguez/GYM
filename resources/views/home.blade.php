@@ -200,26 +200,15 @@
                 </div>
                 @endif
 
-                @if(Auth::check() && Auth::user()->persona->rol->desc_rol == 'Administrador' || Auth::user()->persona->rol->desc_rol == 'Empleado')
-
-                <div class="col-md-4 card-yoga">
-                    <div class="card border-0">
-                        <img src="{{ asset('images/detalles.jpg') }}" alt="" class="card-img-top img-fluid" />
-                        <div class="card-body px-5 py-4">
-                            <div class="d-flex pb-3 gap-3">
-                                <i class="bi bi-person" style="font-size: 2rem; color: #ff7f00;"></i>
-                                <h5 class="card-title pt-4 fs-4 fw-medium">Detalles Ventas</h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                @endif
+                
 
                 @if(Auth::check() && Auth::user()->persona->rol->desc_rol == 'Administrador' || Auth::user()->persona->rol->desc_rol == 'Empleado')
 
                 <div class="col-md-4 card-yoga">
                     <div class="card border-0">
+                    <a href="{{ route('categorias.index') }}">
                         <img src="{{ asset('images/cat.jpg') }}" alt="" class="card-img-top img-fluid" />
+                    </a>
                         <div class="card-body px-5 py-4">
                             <div class="d-flex pb-3 gap-3">
                                 <i class="bi bi-person" style="font-size: 2rem; color: #ff7f00;"></i>
@@ -234,7 +223,9 @@
 
                 <div class="col-md-4 card-yoga">
                     <div class="card border-0">
+                    <a href="{{ route('marcas.index') }}">
                         <img src="{{ asset('images/marcas.jpg') }}" alt="" class="card-img-top img-fluid" />
+                    </a>
                         <div class="card-body px-5 py-4">
                             <div class="d-flex pb-3 gap-3">
                                 <i class="bi bi-person" style="font-size: 2rem; color: #ff7f00;"></i>

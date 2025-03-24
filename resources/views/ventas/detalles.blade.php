@@ -12,18 +12,18 @@
 
         <div class="mb-3">
             <label class="form-label">Venta: </label>
-            <p>{{ $venta->socio->nombre }} {{ $venta->socio->apellido }} - {{ $venta->fecha_venta }}</p>
+            <p>{{ $venta->socio->persona->nom }} {{ $venta->socio->persona->ap }} - {{ $venta->fecha_venta }}</p>
         </div>
 
         <div class="mb-3">
             <h5>Detalles de la Venta:</h5>
             <div id="detallesVenta">
-                <div class="row mb-2">
+                <div class="row mb-2 detalleVenta">
                     <div class="col-md-4">
                         <select name="detalles_venta[0][id_suplemento]" class="form-select" required>
                             <option value="">Seleccionar Suplemento</option>
                             @foreach ($suplementos as $suplemento)
-                                <option value="{{ $suplemento->id_suplemento }}">{{ $suplemento->nombre }}</option>
+                                <option value="{{ $suplemento->id_suplemento }}">{{ $suplemento->nom_suplemento }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -34,10 +34,11 @@
                         <input type="number" name="detalles_venta[0][precio]" class="form-control" placeholder="Precio" required>
                     </div>
                     <div class="col-md-2">
-                        <button type="button" class="btn btn-success" id="addDetalleBtn">Agregar</button>
+                        <button type="button" class="btn btn-danger removeDetalleBtn">Eliminar</button>
                     </div>
                 </div>
             </div>
+            <button type="button" class="btn btn-success mt-2" id="addDetalleBtn">Agregar</button>
         </div>
 
         <div class="d-flex justify-content-end">
@@ -47,36 +48,42 @@
 </div>
 
 <script>
-    let detalleIndex = 1;
-    document.getElementById('addDetalleBtn').addEventListener('click', function() {
-        let detallesVentaDiv = document.getElementById('detallesVenta');
-        let newRow = document.createElement('div');
-        newRow.classList.add('row', 'mb-2');
-        newRow.innerHTML = `
-            <div class="col-md-4">
-                <select name="detalles_venta[${detalleIndex}][id_suplemento]" class="form-select" required>
-                    <option value="">Seleccionar Suplemento</option>
-                    @foreach ($suplementos as $suplemento)
-                        <option value="{{ $suplemento->id_suplemento }}">{{ $suplemento->nombre }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="col-md-3">
-                <input type="number" name="detalles_venta[${detalleIndex}][cantidad]" class="form-control" placeholder="Cantidad" required>
-            </div>
-            <div class="col-md-3">
-                <input type="number" name="detalles_venta[${detalleIndex}][precio]" class="form-control" placeholder="Precio" required>
-            </div>
-            <div class="col-md-2">
-                <button type="button" class="btn btn-danger removeDetalleBtn">Eliminar</button>
-            </div>
-        `;
-        detallesVentaDiv.appendChild(newRow);
-        detalleIndex++;
+    document.addEventListener("DOMContentLoaded", function () {
+        let detalleIndex = 1;
+        const detallesVentaDiv = document.getElementById('detallesVenta');
 
-        // Eliminar detalle
-        newRow.querySelector('.removeDetalleBtn').addEventListener('click', function() {
-            detallesVentaDiv.removeChild(newRow);
+        // Agregar nuevo detalle
+        document.getElementById('addDetalleBtn').addEventListener('click', function() {
+            let newRow = document.createElement('div');
+            newRow.classList.add('row', 'mb-2', 'detalleVenta');
+            newRow.innerHTML = `
+                <div class="col-md-4">
+                    <select name="detalles_venta[${detalleIndex}][id_suplemento]" class="form-select" required>
+                        <option value="">Seleccionar Suplemento</option>
+                        @foreach ($suplementos as $suplemento)
+                            <option value="{{ $suplemento->id_suplemento }}">{{ $suplemento->nom_suplemento }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <input type="number" name="detalles_venta[${detalleIndex}][cantidad]" class="form-control" placeholder="Cantidad" required>
+                </div>
+                <div class="col-md-3">
+                    <input type="number" name="detalles_venta[${detalleIndex}][precio]" class="form-control" placeholder="Precio" required>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-danger removeDetalleBtn">Eliminar</button>
+                </div>
+            `;
+            detallesVentaDiv.appendChild(newRow);
+            detalleIndex++;
+        });
+
+        // Eliminar detalle (delegación de eventos)
+        detallesVentaDiv.addEventListener("click", function (event) {
+            if (event.target.classList.contains("removeDetalleBtn")) {
+                event.target.closest('.detalleVenta').remove();
+            }
         });
     });
 </script>

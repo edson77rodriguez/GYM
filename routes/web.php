@@ -14,6 +14,9 @@ use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\AsistenciaController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\VentaController;
+use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\MarcaController;
+
 
 
 
@@ -39,6 +42,9 @@ Route::resource('proveedores', ProveedorController::class);
 Route::resource('ventas', VentaController::class);
 Route::get('ventas/{id_venta}/detalles', [VentaController::class, 'detalles'])->name('ventas.detalles');
 Route::post('ventas/{id_venta}/detalles', [VentaController::class, 'storeDetalles'])->name('ventas.storeDetalles');
+Route::resource('marcas', MarcaController::class);
+Route::resource('categorias', CategoriaController::class);
+
 
 
 
