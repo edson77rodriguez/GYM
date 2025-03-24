@@ -147,7 +147,7 @@
         <div id="navbarNav" class="collapse navbar-collapse">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a href="#" class="nav-link">Home</a>
+                    <a href="#" class="nav-link">Inicio</a>
                 </li>
        
                 @auth
@@ -158,7 +158,7 @@
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                Logout
+                                Cerrar Sesion
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf
@@ -167,7 +167,7 @@
                     </li>
                 @else
                     <li class="nav-item">
-                        <a class="btn btn-info rounded-1 me-2" href="{{ route('login') }}">Login</a>
+                        <a class="btn btn-info rounded-1 me-2" href="{{ route('login') }}">Iniciar Sesion</a>
                     </li>
                     <li class="nav-item">
                         <a class="btn btn-info rounded-1" href="{{ route('register') }}">Registrarse</a>
@@ -178,14 +178,7 @@
     </div>
 </nav>
 
-<!-- Sidebar -->
-<div id="sidebar">
-    <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Classes</a></li>
-    </ul>
-</div>
+
 
 <!-- Main Content -->
 <div class="container">

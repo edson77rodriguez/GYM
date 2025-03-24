@@ -31,7 +31,7 @@
         }
 
     </style>
-    <title>Gym | Welcome</title>
+    <title>Gym | Bienvenido</title>
 </head>
 <body>
 <!-- Navigation -->
@@ -53,20 +53,14 @@
         <div id="navbarNav" class="collapse navbar-collapse">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a href="#" class="nav-link text-light">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link text-light">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link text-light">Classes</a>
+                    <a href="#" class="nav-link text-light">Inicio</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="btn btn-info rounded-1 me-2" href="{{ route('login') }}">Login</a>
+                    <a class="btn btn-info rounded-1 me-2" href="{{ route('login') }}">Iniciar Sesion</a>
                 </li>
                 <li class="nav-item">
-                    <a class="btn btn-info rounded-1" href="{{ route('register') }}">Registrarse</a>
+                    <a class="btn btn-info rounded-1" href="{{ route('register') }}">Registro</a>
                 </li>
 
             </ul>
