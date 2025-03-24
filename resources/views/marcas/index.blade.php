@@ -29,7 +29,12 @@
                     <div class="d-flex justify-content-between">
                         <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#viewMarcaModal{{ $marca->id_marca }}">Ver</button>
                         <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editMarcaModal{{ $marca->id_marca }}">Editar</button>
-                        <button class="btn btn-danger btn-sm" onclick="confirmDelete('{{ $marca->id_marca }}')">Eliminar</button>
+                        <form action="{{ route('marcas.destroy', $marca) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar esta marca?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                        </form>
+
                     </div>
                 </div>
             </div>

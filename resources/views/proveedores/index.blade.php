@@ -22,11 +22,16 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ $proveedor->persona->nom }} {{ $proveedor->persona->ap }}</h5>
                     <p class="card-text"><strong>Persona Asociada:</strong> {{ $proveedor->persona->nom }} {{ $proveedor->persona->ap }}</p>
-                    
+
                     <div class="d-flex justify-content-between">
                         <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#viewProveedorModal{{ $proveedor->id_proveedor }}">Ver</button>
                         <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editProveedorModal{{ $proveedor->id_proveedor }}">Editar</button>
-                        <button class="btn btn-danger btn-sm" onclick="confirmDelete('{{ $proveedor->id_proveedor }}')">Eliminar</button>
+                        <form action="{{ route('proveedores.destroy', $proveedor) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar este proveedor?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                        </form>
+
                     </div>
                 </div>
             </div>

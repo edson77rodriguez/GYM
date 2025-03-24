@@ -28,7 +28,12 @@
                     <div class="d-flex justify-content-between">
                         <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#viewPlanModal{{ $plan->id_plan }}">Ver</button>
                         <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editPlanModal{{ $plan->id_plan }}">Editar</button>
-                        <button class="btn btn-danger btn-sm" onclick="confirmDelete('{{ $plan->id_plan }}')">Eliminar</button>
+                        <form action="{{ route('plans.destroy', $plan) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar este plan?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                        </form>
+
                     </div>
                 </div>
             </div>

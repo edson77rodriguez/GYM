@@ -46,7 +46,12 @@
                             <td>
                                 <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#viewMembresiaModal{{ $membresia->id_membresia }}">Ver</button>
                                 <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editMembresiaModal{{ $membresia->id_membresia }}">Editar</button>
-                                <button class="btn btn-danger btn-sm" onclick="confirmDelete('{{ $membresia->id_membresia }}')">Eliminar</button>
+                                <form action="{{ route('membresias.destroy', $membresia) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar esta membresía?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                </form>
+
                             </td>
                         </tr>
 

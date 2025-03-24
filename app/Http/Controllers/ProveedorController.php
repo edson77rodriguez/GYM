@@ -48,12 +48,13 @@ class ProveedorController extends Controller
     }
 
     // Eliminar un proveedor
-    public function destroy(Proveedor $proveedor)
+    public function destroy($id)
     {
-        // Eliminar el proveedor
+        $proveedor = Proveedor::findOrFail($id);
         $proveedor->delete();
 
-        // Redirigir con mensaje de éxito
         return redirect()->route('proveedores.index')->with('success', 'Proveedor eliminado correctamente.');
     }
+
+
 }
