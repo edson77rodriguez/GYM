@@ -2,64 +2,63 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pedido;
 use Illuminate\Http\Request;
+use App\Models\Pedido;
+use App\Models\Proveedor;
+use App\Models\Suplemento;
 
 class PedidoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        // Obtén todos los pedidos y los proveedores y suplementos para mostrarlos en la vista
+        $pedidos = Pedido::all();
+        $proveedores = Proveedor::all();
+        $suplementos = Suplemento::all();
+
+        return view('pedidos.index', compact('pedidos', 'proveedores', 'suplementos'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        // Validación de los datos
+        $validatedData = $request->validate([
+            'id_proveedor' => 'required|exists:proveedores,id_proveedor',
+            'id_suplemento' => 'required|exists:suplementos,id_suplemento',
+            'cantidad' => 'required|integer|min:1',
+            'fecha_pedido' => 'required|date',
+        ]);
+
+        // Crear el pedido
+        Pedido::create($validatedData);
+
+        // Redirigir con un mensaje de éxito
+        return redirect()->route('pedidos.index')->with('success', 'Pedido creado correctamente.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Pedido $pedido)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Pedido $pedido)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Pedido $pedido)
     {
-        //
+        // Validación de los datos
+        $validatedData = $request->validate([
+            'id_proveedor' => 'required|exists:proveedores,id_proveedor',
+            'id_suplemento' => 'required|exists:suplementos,id_suplemento',
+            'cantidad' => 'required|integer|min:1',
+            'fecha_pedido' => 'required|date',
+        ]);
+
+        // Actualizar el pedido
+        $pedido->update($validatedData);
+
+        // Redirigir con un mensaje de éxito
+        return redirect()->route('pedidos.index')->with('success', 'Pedido actualizado correctamente.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Pedido $pedido)
     {
-        //
+        // Eliminar el pedido
+        $pedido->delete();
+
+        // Redirigir con un mensaje de éxito
+        return redirect()->route('pedidos.index')->with('success', 'Pedido eliminado correctamente.');
     }
 }

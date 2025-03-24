@@ -34,19 +34,19 @@
                     @foreach ($mantenimientos as $mantenimiento)
                         <tr>
                             <td>{{ $mantenimiento->id }}</td>
-                            <td>{{ $mantenimiento->equipo->nombre }}</td>
-                            <td>{{ $mantenimiento->empleado->nombre }}</td>
+                            <td>{{ $mantenimiento->equipo->nom_equipo }}</td>
+                            <td>{{ $mantenimiento->empleado->persona->nom }} {{ $mantenimiento->empleado->persona->ap }} {{ $mantenimiento->empleado->persona->am }}</td>
                             <td>{{ $mantenimiento->fecha_programada }}</td>
                             <td>{{ $mantenimiento->desc_estado }}</td>
                             <td>
-                                <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#viewMantenimientoModal{{ $mantenimiento->id }}">Ver</button>
-                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editMantenimientoModal{{ $mantenimiento->id }}">Editar</button>
-                                <button class="btn btn-danger btn-sm" onclick="confirmDelete('{{ $mantenimiento->id }}')">Eliminar</button>
-                            </td>
+                                <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#viewMantenimientoModal{{ $mantenimiento->id_mantenimiento }}">Ver</button>
+                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editMantenimientoModal{{ $mantenimiento->id_mantenimiento }}">Editar</button>
+                                <button class="btn btn-danger btn-sm" onclick="confirmDelete('{{ $mantenimiento->id_mantenimiento }}')">Eliminar</button>
+                                </td>
                         </tr>
 
                         <!-- Modal Ver Mantenimiento -->
-                        <div class="modal fade" id="viewMantenimientoModal{{ $mantenimiento->id }}" tabindex="-1">
+                        <div class="modal fade" id="viewMantenimientoModal{{ $mantenimiento->id_mantenimiento }}" tabindex="-1">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -55,8 +55,8 @@
                                     </div>
                                     <div class="modal-body">
                                         <p><strong>ID:</strong> {{ $mantenimiento->id }}</p>
-                                        <p><strong>Equipo:</strong> {{ $mantenimiento->equipo->nombre }}</p>
-                                        <p><strong>Empleado:</strong> {{ $mantenimiento->empleado->nombre }}</p>
+                                        <p><strong>Equipo:</strong> {{ $mantenimiento->equipo->nom_equipo }}</p>
+                                        <p><strong>Empleado:</strong> {{ $mantenimiento->empleado->persona->nom }} {{ $mantenimiento->empleado->persona->ap }} {{ $mantenimiento->empleado->persona->am }}</p>
                                         <p><strong>Fecha Programada:</strong> {{ $mantenimiento->fecha_programada }}</p>
                                         <p><strong>Estado:</strong> {{ $mantenimiento->desc_estado }}</p>
                                     </div>
@@ -65,7 +65,7 @@
                         </div>
 
                         <!-- Modal Editar Mantenimiento -->
-                        <div class="modal fade" id="editMantenimientoModal{{ $mantenimiento->id }}" tabindex="-1">
+                        <div class="modal fade" id="editMantenimientoModal{{ $mantenimiento->id_mantenimiento }}" tabindex="-1">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -73,14 +73,14 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form method="POST" action="{{ route('mantenimientos.update', $mantenimiento->id) }}">
+                                        <form method="POST" action="{{ route('mantenimientos.update', $mantenimiento->id_mantenimiento) }}">
                                             @csrf
                                             @method('PUT')
                                             <div class="mb-3">
                                                 <label class="form-label">Equipo</label>
                                                 <select name="id_equipo" class="form-select" required>
                                                     @foreach ($equipos as $equipo)
-                                                        <option value="{{ $equipo->id }}" {{ $mantenimiento->id_equipo == $equipo->id ? 'selected' : '' }}>{{ $equipo->nombre }}</option>
+                                                        <option value="{{ $equipo->id_equipo }}" {{ $mantenimiento->id_equipo == $equipo->id ? 'selected' : '' }}>{{ $equipo->nombre }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -88,7 +88,7 @@
                                                 <label class="form-label">Empleado</label>
                                                 <select name="id_empleado" class="form-select" required>
                                                     @foreach ($empleados as $empleado)
-                                                        <option value="{{ $empleado->id }}" {{ $mantenimiento->id_empleado == $empleado->id ? 'selected' : '' }}>{{ $empleado->nombre }}</option>
+                                                        <option value="{{ $empleado->id_empleado }}" {{ $mantenimiento->id_empleado == $empleado->id ? 'selected' : '' }}>{{ $empleado->nombre }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -114,6 +114,7 @@
 </div>
 
 <!-- Modal Crear Mantenimiento -->
+<!-- Modal Crear Mantenimiento -->
 <div class="modal fade" id="createMantenimientoModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -121,24 +122,25 @@
                 <h5 class="modal-title">Agregar Nuevo Mantenimiento</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body">                    
                 <form method="POST" action="{{ route('mantenimientos.store') }}">
                     @csrf
                     <div class="mb-3">
-                        <label class="form-label">Equipo</label>
-                        <select name="id_equipo" class="form-select" required>
-                            <option>Selecciona un equipo</option>
-                            @foreach ($equipos as $equipo)
-                                <option value="{{ $equipo->id }}">{{ $equipo->nom_equipo }}</option>
-                            @endforeach
-                        </select>
+                        <label for="id_equipo" class="form-label">Equipo</label>
+                        <select name="id_equipo" id="id_equipo" class="form-select" required>
+                        <option value="">Selecciona un equipo</option>
+                        @foreach ($equipos as $equipo)
+                            <option value="{{ $equipo->id_equipo }}">{{ $equipo->nom_equipo }}</option>
+                        @endforeach
+                    </select>
+
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Empleado</label>
-                        <select name="id_empleado" class="form-select" required>
-                        <option>Selecciona un Empleado encargado</option>
+                        <label for="id_empleado" class="form-label">Empleado</label>
+                        <select name="id_empleado" id="id_empleado" class="form-select" required>
+                            <option value="" disabled selected>Selecciona un Empleado encargado</option>
                             @foreach ($empleados as $empleado)
-                                <option value="{{ $empleado->id }}">{{ $empleado->persona->nom }} {{ $empleado->persona->ap }} {{ $empleado->persona->am }}</option>
+                                <option value="{{ $empleado->id_empleado }}">{{ $empleado->persona->nom }} {{ $empleado->persona->ap }} {{ $empleado->persona->am }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -157,28 +159,47 @@
     </div>
 </div>
 
+
 <script>
-    function confirmDelete(id) {
-        Swal.fire({
-            title: '¿Eliminar Mantenimiento?',
-            text: 'Esta acción no se puede deshacer.',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Sí, eliminar',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                let form = document.createElement('form');
-                form.method = 'POST';
-                form.action = '/mantenimientos/' + id;
-                form.innerHTML = '@csrf @method("DELETE")';
-                document.body.appendChild(form);
-                form.submit();
-            }
-        });
-    }
+function confirmDelete(id_mantenimiento) {
+    Swal.fire({
+        title: '¿Eliminar Mantenimiento?',
+        text: 'Esta acción no se puede deshacer.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let form = document.createElement('form');
+            form.method = 'POST';  // Usamos POST porque Laravel lo convierte en DELETE
+            form.action = '/mantenimientos/' + id_mantenimiento;  // La ruta de eliminación
+            
+            // Agregar el campo _method para indicar que es un DELETE
+            let methodField = document.createElement('input');
+            methodField.type = 'hidden';
+            methodField.name = '_method';
+            methodField.value = 'DELETE';
+            form.appendChild(methodField);
+            
+            // Agregar el campo _token con el token CSRF
+            let csrfField = document.createElement('input');
+            csrfField.type = 'hidden';
+            csrfField.name = '_token';
+            csrfField.value = '{{ csrf_token() }}';
+            form.appendChild(csrfField);
+            
+            // Agregar el formulario al body y enviarlo
+            document.body.appendChild(form);
+            form.submit();
+        }
+    });
+}
+
+
+
 </script>
 
 @if(session('success'))

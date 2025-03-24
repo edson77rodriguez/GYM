@@ -11,6 +11,7 @@ class Mantenimiento extends Model
     use HasFactory;
 
     protected $table = 'mantenimientos';
+    protected $primaryKey = 'id_mantenimiento';
 
     protected $fillable = [
         'id_equipo',

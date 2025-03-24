@@ -9,7 +9,7 @@ class Equipo extends Model
     use HasFactory;
 
     protected $table = 'equipos';
-
+    protected $primaryKey = 'id_equipo';
     protected $fillable = [
         'nom_equipo',
         'desc_equipo',

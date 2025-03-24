@@ -28,11 +28,14 @@ class MantenimientoController extends Controller
             'fecha_programada' => 'required|date',
             'desc_estado' => 'nullable|string',
         ]);
-
+    
         Mantenimiento::create($validatedData);
-
+    
         return redirect()->route('mantenimientos.index')->with('success', 'Mantenimiento creado correctamente.');
     }
+    
+
+
 
     // Actualizar un mantenimiento
     public function update(Request $request, Mantenimiento $mantenimiento)
@@ -53,7 +56,7 @@ class MantenimientoController extends Controller
     public function destroy(Mantenimiento $mantenimiento)
     {
         $mantenimiento->delete();
-
         return redirect()->route('mantenimientos.index')->with('success', 'Mantenimiento eliminado correctamente.');
     }
+    
 }

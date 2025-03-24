@@ -9,6 +9,7 @@ class Disponibilidad extends Model
     use HasFactory;
 
     protected $table = 'disponibilidades';
+    protected $primaryKey = 'id_disponibilidad';
 
     protected $fillable = [
         'desc_dispo',

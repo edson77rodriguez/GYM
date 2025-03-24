@@ -2,64 +2,58 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Proveedor;
 use Illuminate\Http\Request;
+use App\Models\Proveedor;
+use App\Models\Persona;
 
 class ProveedorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Mostrar todos los proveedores
     public function index()
     {
-        //
+        $proveedores = Proveedor::with('persona')->get();
+        $personas = Persona::all();
+
+        return view('proveedores.index', compact('proveedores', 'personas'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Almacenar un nuevo proveedor
     public function store(Request $request)
     {
-        //
+        // Validación de los datos
+        $validatedData = $request->validate([
+            'id_persona' => 'required|exists:personas,id_persona',
+        ]);
+
+        // Crear el proveedor
+        Proveedor::create($validatedData);
+
+        // Redirigir con mensaje de éxito
+        return redirect()->route('proveedores.index')->with('success', 'Proveedor registrado correctamente.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Proveedor $proveedor)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Proveedor $proveedor)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
+    // Actualizar un proveedor
     public function update(Request $request, Proveedor $proveedor)
     {
-        //
+        // Validación de los datos
+        $validatedData = $request->validate([
+            'id_persona' => 'required|exists:personas,id_persona',
+        ]);
+
+        // Actualizar el proveedor
+        $proveedor->update($validatedData);
+
+        // Redirigir con mensaje de éxito
+        return redirect()->route('proveedores.index')->with('success', 'Proveedor actualizado correctamente.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    // Eliminar un proveedor
     public function destroy(Proveedor $proveedor)
     {
-        //
+        // Eliminar el proveedor
+        $proveedor->delete();
+
+        // Redirigir con mensaje de éxito
+        return redirect()->route('proveedores.index')->with('success', 'Proveedor eliminado correctamente.');
     }
 }

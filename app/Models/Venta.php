@@ -13,7 +13,7 @@ class Venta extends Model
     protected $fillable = [
         'id_socio',
         'fecha_venta',
-        'total',
+        'monto',
     ];
 
     public function socio()
