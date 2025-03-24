@@ -13,7 +13,7 @@
     <style>
         /* Los estilos siguen igual... */
     </style>
-    <title>Gym | Welcome</title>
+    <title>Gym | Bienvenido</title>
 </head>
 <body>
 <!-- Navigation -->
@@ -32,11 +32,11 @@
         <div id="navbarNav" class="collapse navbar-collapse">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a href="{{ url('/') }}" class="nav-link text-light">Home</a>
+                    <a href="{{ url('/') }}" class="nav-link text-light">Inicio</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="btn btn-info rounded-1 me-2" href="{{ route('login') }}">Login</a>
+                    <a class="btn btn-info rounded-1 me-2" href="{{ route('login') }}">Iniciar Sesion</a>
                 </li>
                 <li class="nav-item">
                     <a class="btn btn-info rounded-1" href="{{ route('register') }}">Registrarse</a>
@@ -50,7 +50,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+                <div class="card-header">{{ __('Registrar') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
