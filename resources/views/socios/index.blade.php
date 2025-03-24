@@ -7,6 +7,9 @@
 @section('content')
 <div class="container py-5">
     <div class="row">
+    <div class="col-12 text-center mb-4">
+    <h2 class="fw-bold text-uppercase">Socios</h2>
+    </div>
         <div class="col-12 text-end mb-3">
             <button class="btn btn-secondary" onclick="window.location.href='{{ route('home') }}'">
                 {{ __('Regresar a Home') }}
@@ -79,6 +82,7 @@
                                             <div class="mb-3">
                                                 <label class="form-label">Persona</label>
                                                 <select name="id_persona" class="form-select" required>
+                                                <option>Selecciona a tu socio</option>
                                                     @foreach ($personas as $persona)
                                                         <option value="{{ $persona->id_persona }}" {{ $socio->id_persona == $persona->id_persona ? 'selected' : '' }}>{{ $socio->persona->nom }} {{ $socio->persona->ap }} {{ $socio->persona->am }}</option>
                                                     @endforeach
@@ -87,6 +91,7 @@
                                             <div class="mb-3">
                                                 <label class="form-label">Estado Membresía</label>
                                                 <select name="id_estado_mem" class="form-select" required>
+                                                <option>Selecciona su estado de membresia</option>
                                                     @foreach ($estados as $estado)
                                                         <option value="{{ $estado->id_estado_mem }}" {{ $socio->id_estado_mem == $estado->id_estado_mem ? 'selected' : '' }}>{{ $estado->nom_estado }}</option>
                                                     @endforeach
@@ -127,14 +132,16 @@
                     <div class="mb-3">
                         <label class="form-label">Persona</label>
                         <select name="id_persona" class="form-select" required>
+                        <option>Selecciona a tu nuevo socio</option>
                             @foreach ($personas as $persona)
-                                <option value="{{ $persona->id_persona }}">{{ $socio->persona->nom }} {{ $socio->persona->ap }} {{ $socio->persona->am }}</option>
+                                <option value="{{ $persona->id_persona }}">{{ $persona->nom }} {{ $persona->ap }} {{ $persona->am }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Estado Membresía</label>
                         <select name="id_estado_mem" class="form-select" required>
+                        <option>Selecciona el estado de membresia</option>
                             @foreach ($estados as $estado)
                                 <option value="{{ $estado->id_estado_mem }}">{{ $estado->nom_estado }}</option>
                             @endforeach

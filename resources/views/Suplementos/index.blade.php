@@ -7,6 +7,9 @@
 @section('content')
 <div class="container py-5">
     <div class="row">
+    <div class="col-12 text-center mb-4">
+    <h2 class="fw-bold text-uppercase">Suplementos</h2>
+    </div>
         <div class="col-12 text-end mb-3">
         <button class="btn btn-secondary" onclick="window.location.href='{{ route('home') }}'">
     {{ __('Regresar a Home') }}
@@ -81,6 +84,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Categoría</label>
                                 <select name="id_categoria" class="form-select" required>
+                                    <option>Selecciona una categoria</option>
                                     @foreach ($categorias as $categoria)
                                         <option value="{{ $categoria->id_categoria }}" {{ $suplemento->id_categoria == $categoria->id_categoria ? 'selected' : '' }}>{{ $categoria->nom_cat }}</option>
                                     @endforeach
@@ -89,6 +93,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Marca</label>
                                 <select name="id_marca" class="form-select" required>
+                                <option>Selecciona una Marca</option>
                                     @foreach ($marcas as $marca)
                                         <option value="{{ $marca->id_marca }}" {{ $suplemento->id_marca == $marca->id_marca ? 'selected' : '' }}>{{ $marca->nom_marca }}</option>
                                     @endforeach
@@ -139,6 +144,7 @@
                     <div class="mb-3">
                         <label class="form-label">Categoría</label>
                         <select name="id_categoria" class="form-select" required>
+                        <option>Selecciona una categoria</option>
                             @foreach ($categorias as $categoria)
                                 <option value="{{ $categoria->id_categoria }}">{{ $categoria->nom_cat }}</option>
                             @endforeach
@@ -147,6 +153,7 @@
                     <div class="mb-3">
                         <label class="form-label">Marca</label>
                         <select name="id_marca" class="form-select" required>
+                        <option>Selecciona una marca</option>
                             @foreach ($marcas as $marca)
                                 <option value="{{ $marca->id_marca }}">{{ $marca->nom_marca }}</option>
                             @endforeach
@@ -176,7 +183,7 @@
 </div>
 
 <script>
-    function confirmDelete(id) {
+    function confirmDelete(id_suplemento) {
         Swal.fire({
             title: '¿Eliminar Suplemento?',
             text: 'Esta acción no se puede deshacer.',
@@ -190,7 +197,7 @@
             if (result.isConfirmed) {
                 let form = document.createElement('form');
                 form.method = 'POST';
-                form.action = '/suplementos/' + id;
+                form.action = '/suplementos/' + id_suplemento;
                 form.innerHTML = '@csrf @method("DELETE")';
                 document.body.appendChild(form);
                 form.submit();

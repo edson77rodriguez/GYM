@@ -7,7 +7,11 @@
 @section('content')
 <div class="container py-5">
     <div class="row">
+    <div class="col-12 text-center mb-4">
+    <h2 class="fw-bold text-uppercase">Mantenimientos</h2>
+    </div>
         <div class="col-12 text-end mb-3">
+            
             <button class="btn btn-secondary" onclick="window.location.href='{{ route('home') }}'">
                 {{ __('Regresar a Home') }}
             </button>
@@ -79,16 +83,19 @@
                                             <div class="mb-3">
                                                 <label class="form-label">Equipo</label>
                                                 <select name="id_equipo" class="form-select" required>
+                                                <option value="">Selecciona un equipo</option>
                                                     @foreach ($equipos as $equipo)
-                                                        <option value="{{ $equipo->id_equipo }}" {{ $mantenimiento->id_equipo == $equipo->id ? 'selected' : '' }}>{{ $equipo->nombre }}</option>
+                                                        <option value="{{ $equipo->id_equipo }}" {{ $mantenimiento->id_equipo == $equipo->id_mantenimiento ? 'selected' : '' }}>{{ $equipo->nom_equipo }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label">Empleado</label>
                                                 <select name="id_empleado" class="form-select" required>
+                                                <option value="">Selecciona un empleado</option>
+
                                                     @foreach ($empleados as $empleado)
-                                                        <option value="{{ $empleado->id_empleado }}" {{ $mantenimiento->id_empleado == $empleado->id ? 'selected' : '' }}>{{ $empleado->nombre }}</option>
+                                                        <option value="{{ $empleado->id_empleado }}" {{ $mantenimiento->id_empleado == $empleado->id_mantenimiento ? 'selected' : '' }}>{{ $empleado->persona->nom }} {{ $empleado->persona->ap }} {{ $empleado->persona->am }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>

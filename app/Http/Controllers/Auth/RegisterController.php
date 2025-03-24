@@ -92,43 +92,49 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        // Usamos una transacción para asegurar la integridad de los datos
-        DB::beginTransaction();
-    
+        DB::beginTransaction(); // Iniciar la transacción en Laravel
+
         try {
-            // Llamamos al procedimiento almacenado para registrar la persona y el rol
-            DB::select('CALL sp_register_persona(?, ?, ?, ?, ?, ?, ?)', [
-                $data['nom'],  // 'nom' para 'name'
-                $data['ap'],   // 'ap' para 'last name'
-                $data['am'],   // 'am' para 'middle name'
-                $data['telefono'], // 'telefono' para phone number
-                $data['correo'],  // 'correo' para email
-                $data['password'], // 'contrasena' para password
-                $data['desc_rol'],  // 'desc_rol' para role description
+            // Llamar al procedimiento almacenado
+            DB::statement('CALL sp_register_persona(?, ?, ?, ?, ?, ?, ?)', [
+                $data['nom'],  
+                $data['ap'],   
+                $data['am'],   
+                $data['telefono'], 
+                $data['correo'],  
+                Hash::make($data['password']), // Encriptar la contraseña antes de enviarla
+                $data['desc_rol'],  
             ]);
     
-            // Después de llamar al procedimiento, verificamos si la persona fue insertada correctamente
+            // Obtener el ID de la persona recién creada
             $id_persona = DB::table('personas')
-                ->where('correo', $data['correo'])  // Encontramos la persona por el correo
+                ->where('correo', $data['correo'])  
                 ->value('id_persona');
     
-            // Creamos el usuario en la tabla 'users' asociando el id_persona recién creado
+            if (!$id_persona) {
+                throw new \Exception("No se pudo recuperar el ID de la persona.");
+            }
+    
+            // Crear el usuario en la tabla 'users'
             $user = \App\Models\User::create([
-                'name' => $data['nom'],  // 'nom' como 'name'
-                'email' => $data['correo'],  // 'correo' como 'email'
+                'name' => $data['nom'],  
+                'email' => $data['correo'],  
                 'password' => Hash::make($data['password']),
-                'id_persona' => $id_persona, // Asociamos el id_persona creado
+                'id_persona' => $id_persona,
             ]);
     
-            // Confirmar transacción si todo salió bien
-            DB::commit();
+            DB::commit(); // Confirmar la transacción
     
             return $user;
-        } catch (\Exception $e) {
-            // Si hubo un error, revertimos la transacción
-            DB::rollBack();
-            throw $e;
-        }
-    }
     
+        } catch (\Exception $e) {
+            DB::rollBack(); // Revertir la transacción en caso de error
+    
+            // Registrar el error en logs de Laravel (opcional, útil para depuración)
+            \Log::error('Error en el registro: ' . $e->getMessage());
+    
+            // Devolver un mensaje de error personalizado
+            return back()->withErrors(['error' => 'Hubo un problema al registrar la persona.']);
+        }
+}
 }

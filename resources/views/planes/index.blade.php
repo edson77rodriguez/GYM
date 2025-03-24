@@ -7,6 +7,9 @@
 @section('content')
 <div class="container py-5">
     <div class="row">
+    <div class="col-12 text-center mb-4">
+    <h2 class="fw-bold text-uppercase">Planes</h2>
+    </div>
         <div class="col-12 text-end mb-3">
             <button class="btn btn-secondary" onclick="window.location.href='{{ route('home') }}'">
                 {{ __('Regresar a Home') }}

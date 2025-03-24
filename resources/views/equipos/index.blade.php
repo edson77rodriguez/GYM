@@ -8,6 +8,9 @@
 <div class="container py-5">
     <div class="row">
         <div class="col-12 text-end mb-3">
+        <div class="col-12 text-center mb-4">
+    <h2 class="fw-bold text-uppercase">Equipos del gimnasio</h2>
+    </div>
             <!-- Botón para abrir el modal de creación -->
             <button class="btn btn-secondary" onclick="window.location.href='{{ route('home') }}'">
                 {{ __('Regresar a Home') }}
