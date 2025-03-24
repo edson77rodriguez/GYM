@@ -97,78 +97,7 @@
     </div>
 </header>
 
-<!-- About -->
-<section class="about py-5">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <img src="{{ asset('images/about.jpg') }}" alt="" class="img-fluid" />
-            </div>
-            <div class="col-md-6 py-5 ps-5">
-                <p class="lead text-uppercase text-primary fw-medium">About Us</p>
-                <h2 class="text-capitalize fw-bold pb-2">Welcome <br />to our gym</h2>
-                <p class="text-muted">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                </p>
-            </div>
-        </div>
-    </div>
-</section>
 
-<!-- Classes -->
-<section class="classes py-6">
-    <div class="container">
-        <p class="lead text-uppercase text-primary fw-medium text-center">Our Classes</p>
-        <h2 class="text-capitalize fw-bold pb-4 text-center text-light">Fitness classes for every goal</h2>
-        <div class="row">
-            <!-- Class 1 -->
-            <div class="col-md-4">
-                <div class="card border-0">
-                    <img src="{{ asset('images/class-1.jpg') }}" alt="" class="card-img-top img-fluid" />
-                    <div class="card-body px-5 py-4">
-                        <div class="d-flex pb-3 gap-3">
-                            <img src="{{ asset('images/icon-1.png') }}" alt="" />
-                            <h5 class="card-title pt-4 fs-4 fw-medium text-capitalize">Power yoga classes</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Class 2 -->
-            <div class="col-md-4 card-yoga">
-                <div class="card border-0">
-                    <img src="{{ asset('images/class-2.jpg') }}" alt="" class="card-img-top img-fluid" />
-                    <div class="card-body px-5 py-4">
-                        <div class="d-flex pb-3 gap-3">
-                            <img src="{{ asset('images/icon-2.png') }}" alt="" />
-                            <h5 class="card-title pt-4 fs-4 fw-medium">Weight Lifting Classes</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Class 3 -->
-            <div class="col-md-4">
-                <div class="card border-0">
-                    <img src="{{ asset('images/class-3.jpg') }}" alt="" class="card-img-top img-fluid" />
-                    <div class="card-body px-5 py-4">
-                        <div class="d-flex pb-3 gap-3">
-                            <img src="{{ asset('images/icon-3.png') }}" alt="" />
-                            <h5 class="card-title pt-4 fs-4 fw-medium">Cardio & Strength Classes</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- CTA -->
-<section class="cta py-6 text-center">
-    <div class="container">
-        <p class="lead text-uppercase text-primary fw-medium">Join Now</p>
-        <h2 class="text-capitalize fw-bold pb-4">Get started</h2>
-        <button class="btn btn-primary text-uppercase py-2 px-5">Join Now</button>
-    </div>
-</section>
 
 <!-- Footer -->
 <footer class="bg-primary text-center p-4 text-white">
