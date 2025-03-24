@@ -24,11 +24,16 @@
                     <p class="card-text"><strong>Fecha:</strong> {{ $asistencia->fecha_asi }}</p>
                     <p class="card-text"><strong>Hora Entrada:</strong> {{ $asistencia->hora_entrada }}</p>
                     <p class="card-text"><strong>Hora Salida:</strong> {{ $asistencia->hora_salida ?? 'No registrada' }}</p>
-                    
+
                     <div class="d-flex justify-content-between">
                         <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#viewAsistenciaModal{{ $asistencia->id_asistencia }}">Ver</button>
                         <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editAsistenciaModal{{ $asistencia->id_asistencia }}">Editar</button>
-                        <button class="btn btn-danger btn-sm" onclick="confirmDelete('{{ $asistencia->id_asistencia }}')">Eliminar</button>
+                        <form action="{{ route('asistencias.destroy', $asistencia) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar esta asistencia?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                        </form>
+
                     </div>
                 </div>
             </div>

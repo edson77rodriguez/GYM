@@ -11,7 +11,7 @@
     <h2 class="fw-bold text-uppercase">Mantenimientos</h2>
     </div>
         <div class="col-12 text-end mb-3">
-            
+
             <button class="btn btn-secondary" onclick="window.location.href='{{ route('home') }}'">
                 {{ __('Regresar a Home') }}
             </button>
@@ -45,8 +45,13 @@
                             <td>
                                 <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#viewMantenimientoModal{{ $mantenimiento->id_mantenimiento }}">Ver</button>
                                 <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editMantenimientoModal{{ $mantenimiento->id_mantenimiento }}">Editar</button>
-                                <button class="btn btn-danger btn-sm" onclick="confirmDelete('{{ $mantenimiento->id_mantenimiento }}')">Eliminar</button>
-                                </td>
+                                <form action="{{ route('mantenimientos.destroy', $mantenimiento) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar este mantenimiento?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                </form>
+
+                            </td>
                         </tr>
 
                         <!-- Modal Ver Mantenimiento -->
@@ -129,7 +134,7 @@
                 <h5 class="modal-title">Agregar Nuevo Mantenimiento</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <div class="modal-body">                    
+            <div class="modal-body">
                 <form method="POST" action="{{ route('mantenimientos.store') }}">
                     @csrf
                     <div class="mb-3">
@@ -183,21 +188,21 @@ function confirmDelete(id_mantenimiento) {
             let form = document.createElement('form');
             form.method = 'POST';  // Usamos POST porque Laravel lo convierte en DELETE
             form.action = '/mantenimientos/' + id_mantenimiento;  // La ruta de eliminación
-            
+
             // Agregar el campo _method para indicar que es un DELETE
             let methodField = document.createElement('input');
             methodField.type = 'hidden';
             methodField.name = '_method';
             methodField.value = 'DELETE';
             form.appendChild(methodField);
-            
+
             // Agregar el campo _token con el token CSRF
             let csrfField = document.createElement('input');
             csrfField.type = 'hidden';
             csrfField.name = '_token';
             csrfField.value = '{{ csrf_token() }}';
             form.appendChild(csrfField);
-            
+
             // Agregar el formulario al body y enviarlo
             document.body.appendChild(form);
             form.submit();

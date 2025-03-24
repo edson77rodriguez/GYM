@@ -28,7 +28,12 @@
                     <div class="d-flex justify-content-between">
                         <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#viewEstadoModal{{ $estado->id_estado_mem }}">Ver</button>
                         <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editEstadoModal{{ $estado->id_estado_mem }}">Editar</button>
-                        <button class="btn btn-danger btn-sm" onclick="confirmDelete('{{ $estado->id_estado_mem }}')">Eliminar</button>
+                        <form action="{{ route('estados.destroy', $estado->id_estado_mem) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar este estado de membresía?');" style="display: inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                        </form>
+
                     </div>
                 </div>
             </div>

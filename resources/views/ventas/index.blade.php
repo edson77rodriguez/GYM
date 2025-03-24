@@ -35,7 +35,12 @@
                     <div class="d-flex justify-content-between">
                         <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#viewVentaModal{{ $venta->id_venta }}">Ver</button>
                         <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editVentaModal{{ $venta->id_venta }}">Editar</button>
-                        <button class="btn btn-danger btn-sm" onclick="confirmDelete('{{ $venta->id_venta }}')">Eliminar</button>
+                        <form action="{{ route('ventas.destroy', $venta) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar esta venta?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                        </form>
+
                     </div>
                 </div>
             </div>

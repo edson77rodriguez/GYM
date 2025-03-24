@@ -26,7 +26,12 @@
                     <div class="d-flex justify-content-between">
                         <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#viewCategoriaModal{{ $categoria->id_categoria }}">Ver</button>
                         <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editCategoriaModal{{ $categoria->id_categoria }}">Editar</button>
-                        <button class="btn btn-danger btn-sm" onclick="confirmDelete('{{ $categoria->id_categoria }}')">Eliminar</button>
+                        <form action="{{ route('categorias.destroy', $categoria) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar esta categoría?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                        </form>
+
                     </div>
                 </div>
             </div>

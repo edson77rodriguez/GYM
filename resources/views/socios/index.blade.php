@@ -44,7 +44,12 @@
                             <td>
                                 <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#viewSocioModal{{ $socio->id_socio }}">Ver</button>
                                 <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editSocioModal{{ $socio->id_socio }}">Editar</button>
-                                <button class="btn btn-danger btn-sm" onclick="confirmDelete('{{ $socio->id_socio }}')">Eliminar</button>
+                                <form action="{{ route('socios.destroy', $socio->id_socio) }}" method="POST" style="display: inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                </form>
+
                             </td>
                         </tr>
 
@@ -175,15 +180,34 @@
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                let form = document.createElement('form');
+                // Crear un formulario dinámico
+                var form = document.createElement('form');
                 form.method = 'POST';
                 form.action = '/socios/' + id;
-                form.innerHTML = '@csrf @method("DELETE")';
+
+                // Agregar el token CSRF
+                var csrfToken = document.createElement('input');
+                csrfToken.type = 'hidden';
+                csrfToken.name = '_token';
+                csrfToken.value = '{{ csrf_token() }}';  // Asegúrate de que el token CSRF se pase correctamente
+                form.appendChild(csrfToken);
+
+                // Método DELETE en el formulario
+                var methodInput = document.createElement('input');
+                methodInput.type = 'hidden';
+                methodInput.name = '_method';
+                methodInput.value = 'DELETE';
+                form.appendChild(methodInput);
+
+                // Agregar el formulario al documento
                 document.body.appendChild(form);
+
+                // Enviar el formulario
                 form.submit();
             }
         });
     }
+
 </script>
 
 @if(session('success'))

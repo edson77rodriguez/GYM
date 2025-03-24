@@ -35,7 +35,12 @@
                     <div class="d-flex justify-content-between">
                         <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#viewSuplementoModal{{ $suplemento->id_suplemento }}">Ver</button>
                         <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editSuplementoModal{{ $suplemento->id_suplemento }}">Editar</button>
-                        <button class="btn btn-danger btn-sm" onclick="confirmDelete('{{ $suplemento->id_suplemento }}')">Eliminar</button>
+                        <form action="{{ route('suplementos.destroy', $suplemento) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar este suplemento?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                        </form>
+
                     </div>
                 </div>
             </div>
@@ -198,12 +203,16 @@
                 let form = document.createElement('form');
                 form.method = 'POST';
                 form.action = '/suplementos/' + id_suplemento;
-                form.innerHTML = '@csrf @method("DELETE")';
+                form.innerHTML = `
+                @csrf
+                <input type="hidden" name="_method" value="DELETE">
+            `;
                 document.body.appendChild(form);
                 form.submit();
             }
         });
     }
+
 </script>
 
 @if(session('register'))

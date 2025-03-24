@@ -22,11 +22,16 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ $empleado->persona->nom }} {{ $empleado->persona->ap }} {{ $empleado->persona->am }}</h5>
                     <p class="card-text"><strong>Disponibilidad:</strong> {{ $empleado->disponibilidad->desc_dispo }}</p>
-                    
+
                     <div class="d-flex justify-content-between">
                         <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#viewEmpleadoModal{{ $empleado->id_empleado }}">Ver</button>
                         <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editEmpleadoModal{{ $empleado->id_empleado }}">Editar</button>
-                        <button class="btn btn-danger btn-sm" onclick="confirmDelete('{{ $empleado->id_empleado }}')">Eliminar</button>
+                        <form action="{{ route('empleados.destroy', $empleado) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar este empleado?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                        </form>
+
                     </div>
                 </div>
             </div>

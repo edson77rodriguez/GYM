@@ -36,7 +36,12 @@
                         <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editEquipoModal{{ $equipo->id_equipo }}">Editar</button>
 
                         <!-- Botón para eliminar -->
-                        <button class="btn btn-danger btn-sm" onclick="confirmDelete('{{ $equipo->id_equipo }}')">Eliminar</button>
+                        <form action="{{ route('equipos.destroy', $equipo) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar este equipo?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                        </form>
+
                     </div>
                 </div>
             </div>
