@@ -4,13 +4,12 @@
     <!-- Clases -->
     <section class="classes py-6 bg-light">
         <div class="container">
-            <p class="lead text-uppercase text-primary fw-medium text-center">Nuestras Categorías</p>
-            <h2 class="text-capitalize fw-bold pb-4 text-center text-dark">Clases y Categorías de fitness para cada objetivo</h2>
+            <p class="lead text-uppercase text-primary fw-medium text-center">Panel de control</p>
             
             <div class="row">
        
 
-            @if(Auth::check() && (Auth::user()?->persona?->rol?->desc_rol == 'Administrador' || Auth::user()?->persona?->rol?->desc_rol == 'Empleado'))
+            @if(Auth::check() && (Auth::user()?->persona?->rol?->desc_rol == 'Administrador' ))
             <div class="col-md-4 mb-4">
                         <div class="card border-0 shadow-sm rounded-4">
                             <a href="{{ route('suplementos.index') }}">
@@ -26,7 +25,7 @@
                     </div>
                 @endif
 
-                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador' || Auth::user()->persona->rol->desc_rol == 'Empleado'))
+                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador' ))
                     <div class="col-md-4 mb-4">
                         <div class="card border-0 shadow-sm rounded-4">
                             <a href="{{ route('socios.index') }}">
@@ -58,7 +57,7 @@
                     </div>
                 @endif
 
-                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador' || Auth::user()->persona->rol->desc_rol == 'Empleado'))
+                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador' ))
                     <div class="col-md-4 mb-4">
                         <div class="card border-0 shadow-sm rounded-4">
                             <a href="{{ route('equipos.index') }}">
@@ -74,7 +73,7 @@
                     </div>
                 @endif
 
-                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador' || Auth::user()->persona->rol->desc_rol == 'Empleado'))
+                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador' ))
                     <div class="col-md-4 mb-4">
                         <div class="card border-0 shadow-sm rounded-4">
                             <a href="{{ route('mantenimientos.index') }}">
@@ -106,7 +105,7 @@
                     </div>
                 @endif
 
-                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador' || Auth::user()->persona->rol->desc_rol == 'Empleado'))
+                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador' ))
                     <div class="col-md-4 mb-4">
                         <div class="card border-0 shadow-sm rounded-4">
                             <a href="{{ route('membresias.index') }}">
@@ -122,7 +121,7 @@
                     </div>
                 @endif
 
-                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador' || Auth::user()->persona->rol->desc_rol == 'Empleado'))
+                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador' ))
                     <div class="col-md-4 mb-4">
                         <div class="card border-0 shadow-sm rounded-4">
                             <a href="{{ route('pedidos.index') }}">
@@ -138,7 +137,7 @@
                     </div>
                 @endif
 
-                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador' || Auth::user()->persona->rol->desc_rol == 'Empleado'))
+                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador' ))
                     <div class="col-md-4 mb-4">
                         <div class="card border-0 shadow-sm rounded-4">
                             <a href="{{ route('empleados.index') }}">
@@ -154,7 +153,7 @@
                     </div>
                 @endif
 
-                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador' || Auth::user()->persona->rol->desc_rol == 'Empleado'))
+                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador' ))
                     <div class="col-md-4 mb-4">
                         <div class="card border-0 shadow-sm rounded-4">
                             <a href="{{ route('asistencias.index') }}">
@@ -170,7 +169,7 @@
                     </div>
                 @endif
 
-                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador' || Auth::user()->persona->rol->desc_rol == 'Empleado'))
+                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador' ))
     <div class="col-md-4 card-yoga">
         <div class="card border-0">
             <a href="{{ route('proveedores.index') }}">
@@ -186,7 +185,7 @@
     </div>
 @endif
 
-@if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador' || Auth::user()->persona->rol->desc_rol == 'Empleado'))
+@if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador' ))
     <div class="col-md-4 card-yoga">
         <div class="card border-0">
             <a href="{{ route('ventas.index') }}">
@@ -202,7 +201,7 @@
     </div>
 @endif
 
-@if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador' || Auth::user()->persona->rol->desc_rol == 'Empleado'))
+@if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador' ))
     <div class="col-md-4 card-yoga">
         <div class="card border-0">
             <a href="{{ route('categorias.index') }}">
@@ -218,7 +217,7 @@
     </div>
 @endif
 
-@if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador' || Auth::user()->persona->rol->desc_rol == 'Empleado'))
+@if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador' ))
     <div class="col-md-4 card-yoga">
         <div class="card border-0">
             <a href="{{ route('marcas.index') }}">
@@ -233,7 +232,21 @@
         </div>
     </div>
 @endif
-
+@if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Empleado' ))
+                    <div class="col-md-4 mb-4">
+                        <div class="card border-0 shadow-sm rounded-4">
+                            <a href="{{ route('socios.index') }}">
+                                <img src="{{ asset('images/Socios.png') }}" alt="" class="card-img-top img-fluid rounded-3"/>
+                            </a>
+                            <div class="card-body px-4 py-3">
+                                <div class="d-flex align-items-center pb-2 gap-2">
+                                    <i class="bi bi-person-fill" style="font-size: 2rem; color: #007BFF;"></i>
+                                    <h5 class="card-title fs-4 fw-bold text-dark mb-0">Socios</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
 
             </div>
         </div>
