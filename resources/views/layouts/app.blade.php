@@ -9,8 +9,11 @@
     <style>
         /* General Styles */
         body {
-            font-family: Arial, sans-serif;
-        }
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;  /* Asegura que el body ocupe toda la altura de la ventana */
+}
 
         .logo {
             font-size: 1.8rem;
@@ -102,11 +105,14 @@
 
         /* Footer */
         footer {
-            padding: 20px;
-            background-color: #ff7f00;
-            color: white;
-            text-align: center;
-        }
+    padding: 20px;
+    background-color: #ff7f00;
+    color: white;
+    text-align: center;
+}
+.container {
+    flex: 1;  /* El contenedor ocupa el espacio restante */
+}
 
         footer .social-icons a {
             color: white;
