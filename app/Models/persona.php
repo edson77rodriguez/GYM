@@ -46,6 +46,6 @@ class Persona extends Model implements Authenticatable
 
     public function user()
     {
-        return $this->hasOne(User::class, 'id_persona');
+        return $this->hasMany(User::class, 'id_persona');
     }
 }

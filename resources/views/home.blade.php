@@ -8,8 +8,10 @@
             <h2 class="text-capitalize fw-bold pb-4 text-center text-dark">Clases y Categorías de fitness para cada objetivo</h2>
             
             <div class="row">
-                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador' || Auth::user()->persona->rol->desc_rol == 'Empleado'))
-                    <div class="col-md-4 mb-4">
+       
+
+            @if(Auth::check() && (Auth::user()?->persona?->rol?->desc_rol == 'Administrador' || Auth::user()?->persona?->rol?->desc_rol == 'Empleado'))
+            <div class="col-md-4 mb-4">
                         <div class="card border-0 shadow-sm rounded-4">
                             <a href="{{ route('suplementos.index') }}">
                                 <img src="{{ asset('images/Suplementos.jpg') }}" alt="" class="card-img-top img-fluid rounded-3"/>
