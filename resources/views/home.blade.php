@@ -5,9 +5,9 @@
     <section class="classes py-6 bg-light">
         <div class="container">
             <p class="lead text-uppercase text-primary fw-medium text-center">Panel de control</p>
-            
+
             <div class="row">
-       
+
 
             @if(Auth::check() && (Auth::user()?->persona?->rol?->desc_rol == 'Administrador' ))
             <div class="col-md-4 mb-4">
@@ -247,6 +247,39 @@
                         </div>
                     </div>
                 @endif
+                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Empleado' ))
+                    <div class="col-md-4 card-yoga">
+                        <div class="card border-0">
+                            <a href="{{ route('GPM.index') }}">
+                                <img src="{{ asset('images/proo.jpg') }}" alt="" class="card-img-top img-fluid" />
+                            </a>
+                            <div class="card-body px-5 py-4">
+                                <div class="d-flex pb-3 gap-3">
+                                    <i class="bi bi-person" style="font-size: 2rem; color: #ff7f00;"></i>
+                                    <h5 class="card-title pt-4 fs-4 fw-medium">Proveedores</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
+
+                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Empleado' ))
+                    <div class="col-md-4 mb-4">
+                        <div class="card border-0 shadow-sm rounded-4">
+                            <a href="{{ route('GESP.index') }}">
+                                <img src="{{ asset('images/Pedidos.jpg') }}" alt="" class="card-img-top img-fluid rounded-3"/>
+                            </a>
+                            <div class="card-body px-4 py-3">
+                                <div class="d-flex align-items-center pb-2 gap-2">
+                                    <i class="bi bi-cart" style="font-size: 2rem; color: #007BFF;"></i>
+                                    <h5 class="card-title fs-4 fw-bold text-dark mb-0">Pedidos</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
 
                 @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Empleado' ))
     <div class="col-md-4 card-yoga">
