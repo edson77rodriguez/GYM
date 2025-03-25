@@ -28,11 +28,12 @@
                     <div class="d-flex justify-content-between">
                         <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#viewEstadoModal{{ $estado->id_estado_mem }}">Ver</button>
                         <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editEstadoModal{{ $estado->id_estado_mem }}">Editar</button>
-                        <form action="{{ route('estados.destroy', $estado->id_estado_mem) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar este estado de membresía?');" style="display: inline;">
+                        <form onsubmit="event.preventDefault(); confirmDelete({{ $estado->id_estado_mem }});" style="display: inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                         </form>
+
 
                     </div>
                 </div>
@@ -127,7 +128,7 @@
         });
     }
 </script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @if(session('register'))
     <script>Swal.fire('Registro exitoso', 'El estado ha sido creado.', 'success');</script>
 @endif

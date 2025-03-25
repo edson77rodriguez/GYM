@@ -45,11 +45,12 @@
                             <td>
                                 <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#viewMantenimientoModal{{ $mantenimiento->id_mantenimiento }}">Ver</button>
                                 <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editMantenimientoModal{{ $mantenimiento->id_mantenimiento }}">Editar</button>
-                                <form action="{{ route('mantenimientos.destroy', $mantenimiento) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar este mantenimiento?');">
+                                <form onsubmit="event.preventDefault(); confirmDelete({{ $mantenimiento->id_mantenimiento }});" style="display: inline;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                                 </form>
+
 
                             </td>
                         </tr>
@@ -124,7 +125,7 @@
         </div>
     </div>
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- Modal Crear Mantenimiento -->
 <!-- Modal Crear Mantenimiento -->
 <div class="modal fade" id="createMantenimientoModal" tabindex="-1">

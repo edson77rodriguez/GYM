@@ -36,11 +36,12 @@
                         <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editEquipoModal{{ $equipo->id_equipo }}">Editar</button>
 
                         <!-- Botón para eliminar -->
-                        <form action="{{ route('equipos.destroy', $equipo) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar este equipo?');">
+                        <form onsubmit="event.preventDefault(); confirmDelete({{ $equipo->id_equipo }});" style="display: inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                         </form>
+
 
                     </div>
                 </div>
@@ -137,7 +138,7 @@
         </div>
     </div>
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function confirmDelete(id) {
         Swal.fire({

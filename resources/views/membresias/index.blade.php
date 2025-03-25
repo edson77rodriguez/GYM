@@ -46,11 +46,12 @@
                             <td>
                                 <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#viewMembresiaModal{{ $membresia->id_membresia }}">Ver</button>
                                 <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editMembresiaModal{{ $membresia->id_membresia }}">Editar</button>
-                                <form action="{{ route('membresias.destroy', $membresia) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar esta membresía?');">
+                                <form onsubmit="event.preventDefault(); confirmDelete({{ $membresia->id_membresia }});" style="display: inline;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                                 </form>
+
 
                             </td>
                         </tr>
@@ -197,7 +198,7 @@
         });
     }
 </script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @if(session('success'))
     <script>Swal.fire('Éxito', '{{ session('success') }}', 'success');</script>
 @endif

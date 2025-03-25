@@ -26,11 +26,12 @@
                     <div class="d-flex justify-content-between">
                         <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#viewEmpleadoModal{{ $empleado->id_empleado }}">Ver</button>
                         <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editEmpleadoModal{{ $empleado->id_empleado }}">Editar</button>
-                        <form action="{{ route('empleados.destroy', $empleado) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar este empleado?');">
+                        <form onsubmit="event.preventDefault(); confirmDelete({{ $empleado->id_empleado }});" style="display: inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                         </form>
+
 
                     </div>
                 </div>
@@ -154,7 +155,7 @@
         });
     }
 </script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @if(session('success'))
     <script>Swal.fire('Éxito', '{{ session('success') }}', 'success');</script>
 @endif

@@ -29,11 +29,12 @@
                     <div class="d-flex justify-content-between">
                         <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#viewPedidoModal{{ $pedido->id_pedido }}">Ver</button>
                         <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editPedidoModal{{ $pedido->id_pedido }}">Editar</button>
-                        <form action="{{ route('pedidos.destroy', $pedido) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar este pedido?');">
+                        <form onsubmit="event.preventDefault(); confirmDelete({{ $pedido->id_pedido }});" style="display: inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                         </form>
+
 
                     </div>
                 </div>
@@ -171,7 +172,7 @@
         });
     }
 </script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @if(session('register'))
     <script>Swal.fire('Registro exitoso', 'El pedido ha sido creado.', 'success');</script>
 @endif

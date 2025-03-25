@@ -28,11 +28,12 @@
                     <div class="d-flex justify-content-between">
                         <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#viewAsistenciaModal{{ $asistencia->id_asistencia }}">Ver</button>
                         <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editAsistenciaModal{{ $asistencia->id_asistencia }}">Editar</button>
-                        <form action="{{ route('asistencias.destroy', $asistencia) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar esta asistencia?');">
+                        <form onsubmit="event.preventDefault(); confirmDelete({{ $asistencia->id_asistencia }});" style="display: inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                         </form>
+
 
                     </div>
                 </div>
@@ -147,7 +148,7 @@
         });
     }
 </script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @if(session('success'))
     <script>Swal.fire('Éxito', '{{ session('success') }}', 'success');</script>
 @endif

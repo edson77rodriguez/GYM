@@ -28,11 +28,12 @@
                     <div class="d-flex justify-content-between">
                         <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#viewPlanModal{{ $plan->id_plan }}">Ver</button>
                         <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editPlanModal{{ $plan->id_plan }}">Editar</button>
-                        <form action="{{ route('plans.destroy', $plan) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar este plan?');">
+                        <form onsubmit="event.preventDefault(); confirmDelete({{ $plan->id_plan }});" style="display: inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                         </form>
+
 
                     </div>
                 </div>
@@ -145,7 +146,7 @@
         });
     }
 </script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @if(session('success'))
     <script>Swal.fire('Operación exitosa', '{{ session('success') }}', 'success');</script>
 @endif

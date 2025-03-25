@@ -35,11 +35,12 @@
                     <div class="d-flex justify-content-between">
                         <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#viewSuplementoModal{{ $suplemento->id_suplemento }}">Ver</button>
                         <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editSuplementoModal{{ $suplemento->id_suplemento }}">Editar</button>
-                        <form action="{{ route('suplementos.destroy', $suplemento) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar este suplemento?');">
+                        <form onsubmit="event.preventDefault(); confirmDelete({{ $suplemento->id_suplemento }});" style="display: inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger">Eliminar</button>
                         </form>
+
 
                     </div>
                 </div>
@@ -186,7 +187,7 @@
         </div>
     </div>
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function confirmDelete(id_suplemento) {
         Swal.fire({

@@ -35,7 +35,7 @@
                     <div class="d-flex justify-content-between">
                         <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#viewVentaModal{{ $venta->id_venta }}">Ver</button>
                         <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editVentaModal{{ $venta->id_venta }}">Editar</button>
-                        <form action="{{ route('ventas.destroy', $venta) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar esta venta?');">
+                        <form onsubmit="event.preventDefault(); confirmDelete({{ $venta->id_venta }});" style="display: inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
@@ -206,7 +206,7 @@
         });
     }
 </script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @if(session('success'))
     <script>Swal.fire('Éxito', '{{ session('success') }}', 'success');</script>
 @endif

@@ -26,11 +26,12 @@
                     <div class="d-flex justify-content-between">
                         <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#viewCategoriaModal{{ $categoria->id_categoria }}">Ver</button>
                         <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editCategoriaModal{{ $categoria->id_categoria }}">Editar</button>
-                        <form action="{{ route('categorias.destroy', $categoria) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar esta categoría?');">
+                        <form onsubmit="event.preventDefault(); confirmDelete({{ $categoria->id_categoria }});" style="display: inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                         </form>
+
 
                     </div>
                 </div>
@@ -125,6 +126,7 @@
         });
     }
 </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 @if(session('register'))
     <script>Swal.fire('Registro exitoso', 'La categoría ha sido creada.', 'success');</script>

@@ -29,11 +29,13 @@
                     <div class="d-flex justify-content-between">
                         <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#viewMarcaModal{{ $marca->id_marca }}">Ver</button>
                         <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editMarcaModal{{ $marca->id_marca }}">Editar</button>
-                        <form action="{{ route('marcas.destroy', $marca) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar esta marca?');">
+                        <form onsubmit="event.preventDefault(); confirmDelete({{ $marca->id_marca }});" style="display: inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                         </form>
+
+
 
                     </div>
                 </div>
@@ -128,6 +130,7 @@
         });
     }
 </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 @if(session('register'))
     <script>Swal.fire('Registro exitoso', 'La marca ha sido creada.', 'success');</script>
