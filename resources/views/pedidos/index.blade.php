@@ -21,7 +21,8 @@
             <div class="card shadow-sm border-light">
                 <div class="card-body">
                     <h5 class="card-title">Pedido #{{ $pedido->id }}</h5>
-                    <p class="card-text"><strong>Proveedor:</strong> {{ $pedido->proveedor->nombre }}</p>
+                    <p class="card-text"><strong>Proveedor:</strong> {{ $pedido->proveedor->nombre }} {{ $pedido->proveedor->apellido }}</p>
+
                     <p class="card-text"><strong>Suplemento:</strong> {{ $pedido->suplemento->nom_suplemento }}</p>
                     <p class="card-text"><strong>Cantidad:</strong> {{ $pedido->cantidad }}</p>
                     <p class="card-text"><strong>Fecha:</strong> {{ $pedido->fecha_pedido }}</p>

@@ -42,7 +42,7 @@ class Persona extends Model implements Authenticatable
     {
         return $this->hasMany(Socio::class, 'id_persona');
     }
-    
+
 
     public function user()
     {
