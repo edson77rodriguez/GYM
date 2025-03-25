@@ -12,39 +12,40 @@
                 {{ __('Regresar a Home') }}
             </button>
 
-            <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#createVentaModal">
+            <button class="btn btn-secondary" onclick="window.location.href='{{ route('ventas.create') }}'">
                 {{ __('Registrar Venta') }}
             </button>
         </div>
 
         @foreach ($ventas as $venta)
-        <div class="col-md-4 mb-4">
-            <div class="card shadow-sm border-light">
-                <div class="card-body">
-                    <h5 class="card-title">{{ $venta->socio->nombre }} {{ $venta->socio->apellido }}</h5>
-                    <p class="card-text"><strong>Fecha:</strong> {{ $venta->fecha_venta }}</p>
-                    <p class="card-text"><strong>Monto:</strong> ${{ number_format($venta->monto, 2) }}</p>
+    <div class="col-md-4 mb-4">
+        <div class="card shadow-sm border-light">
+            <div class="card-body">
+                <h5 class="card-title">{{ $venta->socio->nombre }} {{ $venta->socio->apellido }}</h5>
+                <p class="card-text"><strong>Fecha:</strong> {{ $venta->fecha_venta }}</p>
+                <p class="card-text"><strong>Monto:</strong> ${{ number_format($venta->monto, 2) }}</p>
 
-                    <h6>Detalles:</h6>
-                    <ul>
-                        @foreach ($venta->detallesVentas as $detalle)
-                            <li>{{ $detalle->suplemento->nombre }} ({{ $detalle->cantidad }} x ${{ number_format($detalle->precio, 2) }})</li>
-                        @endforeach
-                    </ul>
+                <h6>Detalles:</h6>
+                <ul>
+                    @foreach ($venta->detallesVentas as $detalle)
+                        <li>
+                            {{ $detalle->suplemento->nom_suplemento }} ({{ $detalle->cantidad }} x ${{ number_format($detalle->suplemento->precio, 2) }}) = ${{ number_format($detalle->subtotal, 2) }}
+                        </li>
+                    @endforeach
+                </ul>
 
-                    <div class="d-flex justify-content-between">
-                        <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#viewVentaModal{{ $venta->id_venta }}">Ver</button>
-                        <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editVentaModal{{ $venta->id_venta }}">Editar</button>
-                        <form onsubmit="event.preventDefault(); confirmDelete({{ $venta->id_venta }});" style="display: inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-                        </form>
-
-                    </div>
+                <div class="d-flex justify-content-between">
+                    <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#viewVentaModal{{ $venta->id_venta }}">Ver</button>
+                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editVentaModal{{ $venta->id_venta }}">Editar</button>
+                    <form onsubmit="event.preventDefault(); confirmDelete({{ $venta->id_venta }});" style="display: inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
 
         <!-- Modal Ver Venta -->
         <div class="modal fade" id="viewVentaModal{{ $venta->id_venta }}" tabindex="-1">

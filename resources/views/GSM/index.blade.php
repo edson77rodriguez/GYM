@@ -18,6 +18,9 @@
 
         <div class="col-12 text-end mb-3">
             <!-- Botón para agregar un nuevo socio -->
+            <button class="btn btn-secondary" onclick="window.location.href='{{ route('home') }}'">
+                {{ __('Regresar a Home') }}
+            </button>
             <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#createSocioModal">
                 {{ __('Agregar Nuevo Socio') }}
             </button>

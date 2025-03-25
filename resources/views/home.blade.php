@@ -121,7 +121,7 @@
                     </div>
                 @endif
 
-                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador' ))
+                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Empleado' ))
                     <div class="col-md-4 mb-4">
                         <div class="card border-0 shadow-sm rounded-4">
                             <a href="{{ route('pedidos.index') }}">
@@ -241,12 +241,28 @@
                             <div class="card-body px-4 py-3">
                                 <div class="d-flex align-items-center pb-2 gap-2">
                                     <i class="bi bi-person-fill" style="font-size: 2rem; color: #007BFF;"></i>
-                                    <h5 class="card-title fs-4 fw-bold text-dark mb-0">Socios</h5>
+                                    <h5 class="card-title fs-4 fw-bold text-dark mb-0">Gestion de socios</h5>
                                 </div>
                             </div>
                         </div>
                     </div>
                 @endif
+
+                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Empleado' ))
+    <div class="col-md-4 card-yoga">
+        <div class="card border-0">
+            <a href="{{ route('ventas.create') }}">
+                <img src="{{ asset('images/ventas.jpg') }}" alt="" class="card-img-top img-fluid" />
+            </a>
+            <div class="card-body px-5 py-4">
+                <div class="d-flex pb-3 gap-3">
+                    <i class="bi bi-person" style="font-size: 2rem; color: #ff7f00;"></i>
+                    <h5 class="card-title pt-4 fs-4 fw-medium">Gestion de Ventas</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
 
             </div>
         </div>
