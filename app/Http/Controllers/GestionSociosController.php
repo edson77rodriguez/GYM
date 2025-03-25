@@ -8,6 +8,7 @@ use App\Models\Persona;
 use App\Models\Estado_Membresia;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Plan;
 
 class GestionSociosController extends Controller
 {
@@ -18,8 +19,8 @@ class GestionSociosController extends Controller
         $personas = Persona::all();
         $estados = Estado_Membresia::all();
         $user = auth()->user();
-
-        return view('GSM.index', compact('socios', 'personas', 'estados','user'));
+        $planes = Plan::all();
+        return view('GSM.index', compact('socios', 'personas', 'estados','user','planes'));
     }
 
     // Guardar un nuevo socio
