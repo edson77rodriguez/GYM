@@ -17,10 +17,6 @@
                 {{ __('Agregar Nuevo Socio') }}
             </button>
 
-            <!-- Botón para registrar una nueva persona -->
-            <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#createPersonaModal">
-                {{ __('Registrar Nueva Persona') }}
-            </button>
         </div>
 
         <!-- Tabla de socios -->
@@ -28,7 +24,6 @@
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Nombre Persona</th>
                         <th>Estado Membresía</th>
                         <th>Fecha Inscripción</th>
@@ -39,7 +34,6 @@
                 <tbody>
                     @foreach ($socios as $socio)
                         <tr>
-                            <td>{{ $socio->id_socio }}</td>
                             <td>{{ $socio->persona->nom }} {{ $socio->persona->ap }} {{ $socio->persona->am }}</td>
                             <td>{{ $socio->estadoMembresia->nom_estado }}</td>
                             <td>{{ $socio->fecha_inscripcion->format('d-m-Y') }}</td>
@@ -62,7 +56,6 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <p><strong>ID:</strong> {{ $socio->id_socio }}</p>
                                         <p><strong>Persona:</strong> {{ $socio->persona->nom }} {{ $socio->persona->ap }} {{ $socio->persona->am }}</p>
                                         <p><strong>Estado Membresía:</strong> {{ $socio->estadoMembresia->nom_estado }}</p>
                                         <p><strong>Fecha Inscripción:</strong> {{ $socio->fecha_inscripcion->format('d-m-Y') }}</p>
@@ -94,7 +87,7 @@
     </div>
 </div>
 
-<!-- Modal para crear un nuevo socio -->
+<!-- Modal para crear un nuevo socio con datos personales -->
 <div class="modal fade" id="createSocioModal" tabindex="-1" aria-labelledby="createSocioModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -103,19 +96,30 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('socios.store') }}" method="POST">
+                <form action="{{ route('GSM.store') }}" method="POST">
                     @csrf
                     <div class="mb-3">
-                        <label for="id_persona" class="form-label">Persona</label>
-                        <select name="id_persona" id="id_persona" class="form-select" required>
-                            <option value="">Selecciona una Persona</option>
-                            @foreach ($personas as $persona)
-                                <option value="{{ $persona->id_persona }}">{{ $persona->nom }} {{ $persona->ap }} {{ $persona->am }}</option>
-                            @endforeach
-                        </select>
+                        <label for="nom" class="form-label">Nombre</label>
+                        <input type="text" name="nom" id="nom" class="form-control" required>
                     </div>
                     <div class="mb-3">
-                        <label for="fecha_inscripcion" class="form-label">Fecha Inscripción</label>
+                        <label for="ap" class="form-label">Apellido Paterno</label>
+                        <input type="text" name="ap" id="ap" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="am" class="form-label">Apellido Materno</label>
+                        <input type="text" name="am" id="am" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="telefono" class="form-label">Teléfono</label>
+                        <input type="text" name="telefono" id="telefono" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="correo" class="form-label">Correo Electrónico</label>
+                        <input type="email" name="correo" id="correo" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="fecha_inscripcion" class="form-label">Fecha de Inscripción</label>
                         <input type="date" name="fecha_inscripcion" class="form-control" required>
                     </div>
                     <div class="modal-footer">
@@ -127,6 +131,7 @@
         </div>
     </div>
 </div>
+
 
 <!-- Modal para registrar nueva persona (no tiene ruta aún) -->
 <div class="modal fade" id="createPersonaModal" tabindex="-1" aria-labelledby="createPersonaModalLabel" aria-hidden="true">

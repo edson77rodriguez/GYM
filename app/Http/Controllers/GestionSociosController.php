@@ -24,21 +24,43 @@ class GestionSociosController extends Controller
 
     // Guardar un nuevo socio
     public function store(Request $request)
-    {
-        // Validación
-        $validatedData = $request->validate([
-            'id_persona' => 'required|exists:personas,id_persona',
-            'fecha_inscripcion' => 'required|date',
-        ]);
+{
+    // Validar los datos del formulario
+    $validatedData = $request->validate([
+        'nom' => 'required|string|max:255',
+        'ap' => 'required|string|max:255',
+        'am' => 'nullable|string|max:255',
+        'telefono' => 'required|string|max:20',
+        'correo' => 'required|email|unique:personas,correo',
+        'fecha_inscripcion' => 'required|date',
+    ]);
 
-        // Establecer la fecha de vencimiento como 0000-00-00 y el estado de membresía a 1 (inhabilitado)
-// Establecer la fecha de vencimiento como el siguiente día
-$validatedData['fecha_vencimiento'] = Carbon::now()->addDay(); // Añadir un día a la fecha actual
-        $validatedData['id_estado_mem'] = 1;  // Estado inhabilitado
-
-        // Crear el nuevo socio
-        Socio::create($validatedData);
-
-        return redirect()->route('GSM.index')->with('success', 'Socio creado correctamente.');
+    // Buscar el ID del rol "Socio"
+    $rolSocio = \App\Models\Rol::where('desc_rol', 'Socio')->first();
+    if (!$rolSocio) {
+        return redirect()->back()->with('error', 'No se encontró el rol de Socio.');
     }
+
+    // Crear la persona y asignarle el rol de socio
+    $persona = \App\Models\Persona::create([
+        'nom' => $validatedData['nom'],
+        'ap' => $validatedData['ap'],
+        'am' => $validatedData['am'],
+        'telefono' => $validatedData['telefono'],
+        'correo' => $validatedData['correo'],
+        'contrasena' => bcrypt('password123'), // Contraseña por defecto
+        'id_rol' => $rolSocio->id_rol,
+    ]);
+
+    // Crear el socio con la persona recién creada
+    Socio::create([
+        'id_persona' => $persona->id_persona,
+        'fecha_inscripcion' => $validatedData['fecha_inscripcion'],
+        'fecha_vencimiento' => Carbon::now()->addDay(), // Fecha de vencimiento inicial
+        'id_estado_mem' => 1, // Estado inhabilitado por defecto
+    ]);
+
+    return redirect()->route('GSM.index')->with('success', 'Socio creado correctamente.');
+}
+
 }
