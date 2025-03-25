@@ -235,7 +235,7 @@
 @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Empleado' ))
                     <div class="col-md-4 mb-4">
                         <div class="card border-0 shadow-sm rounded-4">
-                            <a href="{{ route('socios.index') }}">
+                            <a href="{{ route('GSM.index') }}">
                                 <img src="{{ asset('images/Socios.png') }}" alt="" class="card-img-top img-fluid rounded-3"/>
                             </a>
                             <div class="card-body px-4 py-3">

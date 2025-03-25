@@ -17,6 +17,7 @@ use App\Http\Controllers\VentaController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\MarcaController;
 
+use App\Http\Controllers\GestionSociosController;
 
 
 
@@ -72,6 +73,9 @@ Route::delete('/marcas/{marca}', [MarcaController::class, 'destroy'])->name('mar
 Route::delete('/categorias/{categoria}', [CategoriaController::class, 'destroy'])->name('categorias.destroy');
 
 Route::resource('categorias', CategoriaController::class);
+
+Route::resource('GSM', GestionSociosController::class);
+
 
 
 
