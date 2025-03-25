@@ -69,6 +69,7 @@ Route::resource('ventas', VentaController::class);
 Route::delete('/ventas/{venta}', [VentaController::class, 'destroy'])->name('ventas.destroy');
 Route::get('ventas/{venta}/detalles', [VentaController::class, 'agregarDetalles'])->name('ventas.detalle');
 Route::post('ventas/{venta}/detalles', [VentaController::class, 'storeDetalles'])->name('ventas.detalles.store');
+Route::delete('ventas/detalles/{detalle}', [VentaController::class, 'destroyDetalle'])->name('ventas.detalles.destroy');
 
 Route::get('ventas/{id_venta}/detalles', [VentaController::class, 'detalles'])->name('ventas.detalles');
 Route::post('ventas/{id_venta}/detalles', [VentaController::class, 'storeDetalles'])->name('ventas.storeDetalles');

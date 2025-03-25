@@ -21,7 +21,7 @@
     <div class="col-md-4 mb-4">
         <div class="card shadow-sm border-light">
             <div class="card-body">
-                <h5 class="card-title">{{ $venta->socio->nombre }} {{ $venta->socio->apellido }}</h5>
+                <h5 class="card-title">{{ $venta->socio->nom }} {{ $venta->socio->ap }}</h5>
                 <p class="card-text"><strong>Fecha:</strong> {{ $venta->fecha_venta }}</p>
                 <p class="card-text"><strong>Monto:</strong> ${{ number_format($venta->monto, 2) }}</p>
 
@@ -56,7 +56,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
-                        <p><strong>Socio:</strong> {{ $venta->socio->nombre }} {{ $venta->socio->apellido }}</p>
+                        <p><strong>Socio:</strong> {{ $venta->socio->nom }} {{ $venta->socio->ap }}</p>
                         <p><strong>Fecha de Venta:</strong> {{ $venta->fecha_venta }}</p>
                         <p><strong>Monto:</strong> ${{ number_format($venta->monto, 2) }}</p>
                         <ul>

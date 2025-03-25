@@ -121,7 +121,7 @@
                     </div>
                 @endif
 
-                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Empleado' ))
+                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador' ))
                     <div class="col-md-4 mb-4">
                         <div class="card border-0 shadow-sm rounded-4">
                             <a href="{{ route('pedidos.index') }}">
@@ -284,7 +284,7 @@
                 @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Empleado' ))
     <div class="col-md-4 card-yoga">
         <div class="card border-0">
-            <a href="{{ route('ventas.create') }}">
+            <a href="{{ route('ventas.index') }}">
                 <img src="{{ asset('images/ventas.jpg') }}" alt="" class="card-img-top img-fluid" />
             </a>
             <div class="card-body px-5 py-4">

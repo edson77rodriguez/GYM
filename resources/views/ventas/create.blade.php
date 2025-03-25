@@ -13,7 +13,15 @@
             {{ session('success') }}
         </div>
     @endif
+    <div class="col-12 text-end mb-3">
+            <button class="btn btn-secondary" onclick="window.location.href='{{ route('home') }}'">
+                {{ __('Regresar a Home') }}
+            </button>
 
+            <button class="btn btn-secondary" onclick="window.location.href='{{ route('ventas.index') }}'">
+                {{ __(' Regresar a ventas') }}
+            </button>
+        </div>
     <form action="{{ route('ventas.store') }}" method="POST">
         @csrf
         <div class="mb-3">
