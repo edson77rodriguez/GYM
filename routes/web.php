@@ -45,6 +45,8 @@ Route::delete('/plans/{plan}', [PlanController::class, 'destroy'])->name('plans.
 
 Route::resource('membresias', MembresiaController::class);
 Route::delete('/membresias/{membresia}', [MembresiaController::class, 'destroy'])->name('membresias.destroy');
+Route::post('/membresias/storee', [MembresiaController::class, 'storee'])->name('membresias.storee');
+
 
 Route::resource('mantenimientos', MantenimientoController::class);
 Route::delete('/mantenimientos/{mantenimiento}', [MantenimientoController::class, 'destroy'])->name('mantenimientos.destroy');
