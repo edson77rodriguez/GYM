@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<div class="container py-5">
+<div class="container py-5" style="min-height: 80vh;">
     <div class="row">
         <div class="col-12 text-center mb-4">
             <h2 class="fw-bold text-uppercase">Gestión de Socios</h2>
