@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\GestionPedidosController;
+use App\Http\Controllers\GestionProveedoresController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\SuplementoController;
@@ -75,6 +77,8 @@ Route::delete('/categorias/{categoria}', [CategoriaController::class, 'destroy']
 Route::resource('categorias', CategoriaController::class);
 
 Route::resource('GSM', GestionSociosController::class);
+Route::resource('GPM', GestionProveedoresController::class);
+Route::resource('GESP', GestionPedidosController::class);
 
 
 
