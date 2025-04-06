@@ -1,303 +1,386 @@
 @extends('layouts.app')
 
 @section('content')
-    <!-- Clases -->
-    <section class="classes py-6 bg-light">
+    <!-- Panel de Control -->
+    <section class="dashboard py-6 bg-light">
         <div class="container">
-            <p class="lead text-uppercase text-primary fw-medium text-center">Panel de control</p>
+            <h2 class="text-uppercase text-primary fw-bold text-center mb-5">Panel de Control</h2>
 
-            <div class="row">
-
-
-            @if(Auth::check() && (Auth::user()?->persona?->rol?->desc_rol == 'Administrador' ))
-            <div class="col-md-4 mb-4">
-                        <div class="card border-0 shadow-sm rounded-4">
+            <div class="row g-4">
+                @if(Auth::check() && (Auth::user()?->persona?->rol?->desc_rol == 'Administrador'))
+                <div class="col-md-4 col-lg-3">
+                    <div class="card h-100 border-0 shadow-sm rounded-3 overflow-hidden">
+                        <div class="card-img-container">
                             <a href="{{ route('suplementos.index') }}">
-                                <img src="{{ asset('images/Suplementos.jpg') }}" alt="" class="card-img-top img-fluid rounded-3"/>
+                                <img src="{{ asset('images/Suplementos.jpg') }}" alt="Suplementos" class="card-img-top img-fluid">
                             </a>
-                            <div class="card-body px-4 py-3">
-                                <div class="d-flex align-items-center pb-2 gap-2">
-                                    <i class="bi bi-capsule" style="font-size: 2rem; color: #007BFF;"></i>
-                                    <h5 class="card-title fs-4 fw-bold text-dark mb-0">Suplementos</h5>
-                                </div>
+                        </div>
+                        <div class="card-body text-center p-3">
+                            <div class="d-flex align-items-center justify-content-center gap-2">
+                                <i class="bi bi-capsule text-primary fs-3"></i>
+                                <h5 class="card-title fw-bold mb-0">Suplementos</h5>
                             </div>
                         </div>
                     </div>
+                </div>
                 @endif
 
-                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador' ))
-                    <div class="col-md-4 mb-4">
-                        <div class="card border-0 shadow-sm rounded-4">
+                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador'))
+                <div class="col-md-4 col-lg-3">
+                    <div class="card h-100 border-0 shadow-sm rounded-3 overflow-hidden">
+                        <div class="card-img-container">
                             <a href="{{ route('socios.index') }}">
-                                <img src="{{ asset('images/Socios.png') }}" alt="" class="card-img-top img-fluid rounded-3"/>
+                                <img src="{{ asset('images/Socios.png') }}" alt="Socios" class="card-img-top img-fluid">
                             </a>
-                            <div class="card-body px-4 py-3">
-                                <div class="d-flex align-items-center pb-2 gap-2">
-                                    <i class="bi bi-person-fill" style="font-size: 2rem; color: #007BFF;"></i>
-                                    <h5 class="card-title fs-4 fw-bold text-dark mb-0">Socios</h5>
-                                </div>
+                        </div>
+                        <div class="card-body text-center p-3">
+                            <div class="d-flex align-items-center justify-content-center gap-2">
+                                <i class="bi bi-person-fill text-primary fs-3"></i>
+                                <h5 class="card-title fw-bold mb-0">Socios</h5>
                             </div>
                         </div>
                     </div>
+                </div>
                 @endif
 
                 @if(Auth::check() && Auth::user()->persona->rol->desc_rol == 'Administrador')
-                    <div class="col-md-4 mb-4">
-                        <div class="card border-0 shadow-sm rounded-4">
+                <div class="col-md-4 col-lg-3">
+                    <div class="card h-100 border-0 shadow-sm rounded-3 overflow-hidden">
+                        <div class="card-img-container">
                             <a href="{{ route('estado_membresias.index') }}">
-                                <img src="{{ asset('images/Estados.jpg') }}" alt="" class="card-img-top img-fluid rounded-3"/>
+                                <img src="{{ asset('images/Estados.jpg') }}" alt="Estados de Membresías" class="card-img-top img-fluid">
                             </a>
-                            <div class="card-body px-4 py-3">
-                                <div class="d-flex align-items-center pb-2 gap-2">
-                                    <i class="bi bi-card-checklist" style="font-size: 2rem; color: #007BFF;"></i>
-                                    <h5 class="card-title fs-4 fw-bold text-dark mb-0">Estados de Membresías</h5>
-                                </div>
+                        </div>
+                        <div class="card-body text-center p-3">
+                            <div class="d-flex align-items-center justify-content-center gap-2">
+                                <i class="bi bi-card-checklist text-primary fs-3"></i>
+                                <h5 class="card-title fw-bold mb-0">Estados de Membresías</h5>
                             </div>
                         </div>
                     </div>
+                </div>
                 @endif
 
-                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador' ))
-                    <div class="col-md-4 mb-4">
-                        <div class="card border-0 shadow-sm rounded-4">
+                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador'))
+                <div class="col-md-4 col-lg-3">
+                    <div class="card h-100 border-0 shadow-sm rounded-3 overflow-hidden">
+                        <div class="card-img-container">
                             <a href="{{ route('equipos.index') }}">
-                                <img src="{{ asset('images/class-3.jpg') }}" alt="" class="card-img-top img-fluid rounded-3"/>
+                                <img src="{{ asset('images/class-3.jpg') }}" alt="Equipos de Gym" class="card-img-top img-fluid">
                             </a>
-                            <div class="card-body px-4 py-3">
-                                <div class="d-flex align-items-center pb-2 gap-2">
-                                    <img src="{{ asset('images/icon-1.png') }}" alt="" />
-                                    <h5 class="card-title fs-4 fw-bold text-dark mb-0">Equipos de Gym</h5>
-                                </div>
+                        </div>
+                        <div class="card-body text-center p-3">
+                            <div class="d-flex align-items-center justify-content-center gap-2">
+                                <i class="bi bi-activity text-primary fs-3"></i>
+                                <h5 class="card-title fw-bold mb-0">Equipos de Gym</h5>
                             </div>
                         </div>
                     </div>
+                </div>
                 @endif
 
-                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador' ))
-                    <div class="col-md-4 mb-4">
-                        <div class="card border-0 shadow-sm rounded-4">
+                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador'))
+                <div class="col-md-4 col-lg-3">
+                    <div class="card h-100 border-0 shadow-sm rounded-3 overflow-hidden">
+                        <div class="card-img-container">
                             <a href="{{ route('mantenimientos.index') }}">
-                                <img src="{{ asset('images/class-3.jpg') }}" alt="" class="card-img-top img-fluid rounded-3"/>
+                                <img src="{{ asset('images/class-3.jpg') }}" alt="Mantenimiento" class="card-img-top img-fluid">
                             </a>
-                            <div class="card-body px-4 py-3">
-                                <div class="d-flex align-items-center pb-2 gap-2">
-                                    <i class="bi bi-tools" style="font-size: 2rem; color: #007BFF;"></i>
-                                    <h5 class="card-title fs-4 fw-bold text-dark mb-0">Mantenimiento de equipos</h5>
-                                </div>
+                        </div>
+                        <div class="card-body text-center p-3">
+                            <div class="d-flex align-items-center justify-content-center gap-2">
+                                <i class="bi bi-tools text-primary fs-3"></i>
+                                <h5 class="card-title fw-bold mb-0">Mantenimiento</h5>
                             </div>
                         </div>
                     </div>
+                </div>
                 @endif
 
                 @if(Auth::check() && Auth::user()->persona->rol->desc_rol == 'Administrador')
-                    <div class="col-md-4 mb-4">
-                        <div class="card border-0 shadow-sm rounded-4">
+                <div class="col-md-4 col-lg-3">
+                    <div class="card h-100 border-0 shadow-sm rounded-3 overflow-hidden">
+                        <div class="card-img-container">
                             <a href="{{ route('planes.index') }}">
-                                <img src="{{ asset('images/class-2.jpg') }}" alt="" class="card-img-top img-fluid rounded-3"/>
+                                <img src="{{ asset('images/class-2.jpg') }}" alt="Planes" class="card-img-top img-fluid">
                             </a>
-                            <div class="card-body px-4 py-3">
-                                <div class="d-flex align-items-center pb-2 gap-2">
-                                    <img src="{{ asset('images/icon-3.png') }}" alt="" />
-                                    <h5 class="card-title fs-4 fw-bold text-dark mb-0">Planes</h5>
-                                </div>
+                        </div>
+                        <div class="card-body text-center p-3">
+                            <div class="d-flex align-items-center justify-content-center gap-2">
+                                <i class="bi bi-card-list text-primary fs-3"></i>
+                                <h5 class="card-title fw-bold mb-0">Planes</h5>
                             </div>
                         </div>
                     </div>
+                </div>
                 @endif
 
-                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador' ))
-                    <div class="col-md-4 mb-4">
-                        <div class="card border-0 shadow-sm rounded-4">
+                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador'))
+                <div class="col-md-4 col-lg-3">
+                    <div class="card h-100 border-0 shadow-sm rounded-3 overflow-hidden">
+                        <div class="card-img-container">
                             <a href="{{ route('membresias.index') }}">
-                                <img src="{{ asset('images/class-1.jpg') }}" alt="" class="card-img-top img-fluid rounded-3"/>
+                                <img src="{{ asset('images/class-1.jpg') }}" alt="Membresías" class="card-img-top img-fluid">
                             </a>
-                            <div class="card-body px-4 py-3">
-                                <div class="d-flex align-items-center pb-2 gap-2">
-                                    <img src="{{ asset('images/icon-1.png') }}" alt="" />
-                                    <h5 class="card-title fs-4 fw-bold text-dark mb-0">Membresías</h5>
-                                </div>
+                        </div>
+                        <div class="card-body text-center p-3">
+                            <div class="d-flex align-items-center justify-content-center gap-2">
+                                <i class="bi bi-credit-card text-primary fs-3"></i>
+                                <h5 class="card-title fw-bold mb-0">Membresías</h5>
                             </div>
                         </div>
                     </div>
+                </div>
                 @endif
 
-                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador' ))
-                    <div class="col-md-4 mb-4">
-                        <div class="card border-0 shadow-sm rounded-4">
+                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador'))
+                <div class="col-md-4 col-lg-3">
+                    <div class="card h-100 border-0 shadow-sm rounded-3 overflow-hidden">
+                        <div class="card-img-container">
                             <a href="{{ route('pedidos.index') }}">
-                                <img src="{{ asset('images/Pedidos.jpg') }}" alt="" class="card-img-top img-fluid rounded-3"/>
+                                <img src="{{ asset('images/Pedidos.jpg') }}" alt="Pedidos" class="card-img-top img-fluid">
                             </a>
-                            <div class="card-body px-4 py-3">
-                                <div class="d-flex align-items-center pb-2 gap-2">
-                                    <i class="bi bi-cart" style="font-size: 2rem; color: #007BFF;"></i>
-                                    <h5 class="card-title fs-4 fw-bold text-dark mb-0">Pedidos</h5>
-                                </div>
+                        </div>
+                        <div class="card-body text-center p-3">
+                            <div class="d-flex align-items-center justify-content-center gap-2">
+                                <i class="bi bi-cart text-primary fs-3"></i>
+                                <h5 class="card-title fw-bold mb-0">Pedidos</h5>
                             </div>
                         </div>
                     </div>
+                </div>
                 @endif
 
-                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador' ))
-                    <div class="col-md-4 mb-4">
-                        <div class="card border-0 shadow-sm rounded-4">
+                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador'))
+                <div class="col-md-4 col-lg-3">
+                    <div class="card h-100 border-0 shadow-sm rounded-3 overflow-hidden">
+                        <div class="card-img-container">
                             <a href="{{ route('empleados.index') }}">
-                                <img src="{{ asset('images/Empleados.jpg') }}" alt="" class="card-img-top img-fluid rounded-3"/>
+                                <img src="{{ asset('images/Empleados.jpg') }}" alt="Empleados" class="card-img-top img-fluid">
                             </a>
-                            <div class="card-body px-4 py-3">
-                                <div class="d-flex align-items-center pb-2 gap-2">
-                                    <i class="bi bi-person" style="font-size: 2rem; color: #007BFF;"></i>
-                                    <h5 class="card-title fs-4 fw-bold text-dark mb-0">Empleados</h5>
-                                </div>
+                        </div>
+                        <div class="card-body text-center p-3">
+                            <div class="d-flex align-items-center justify-content-center gap-2">
+                                <i class="bi bi-people text-primary fs-3"></i>
+                                <h5 class="card-title fw-bold mb-0">Empleados</h5>
                             </div>
                         </div>
                     </div>
+                </div>
                 @endif
 
-                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador' ))
-                    <div class="col-md-4 mb-4">
-                        <div class="card border-0 shadow-sm rounded-4">
+                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador'))
+                <div class="col-md-4 col-lg-3">
+                    <div class="card h-100 border-0 shadow-sm rounded-3 overflow-hidden">
+                        <div class="card-img-container">
                             <a href="{{ route('asistencias.index') }}">
-                                <img src="{{ asset('images/asistencia.jpg') }}" alt="" class="card-img-top img-fluid rounded-3"/>
+                                <img src="{{ asset('images/asistencia.jpg') }}" alt="Asistencias" class="card-img-top img-fluid">
                             </a>
-                            <div class="card-body px-4 py-3">
-                                <div class="d-flex align-items-center pb-2 gap-2">
-                                    <i class="bi bi-calendar-check" style="font-size: 2rem; color: #007BFF;"></i>
-                                    <h5 class="card-title fs-4 fw-bold text-dark mb-0">Asistencias</h5>
-                                </div>
+                        </div>
+                        <div class="card-body text-center p-3">
+                            <div class="d-flex align-items-center justify-content-center gap-2">
+                                <i class="bi bi-calendar-check text-primary fs-3"></i>
+                                <h5 class="card-title fw-bold mb-0">Asistencias</h5>
                             </div>
                         </div>
                     </div>
+                </div>
                 @endif
 
-                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador' ))
-    <div class="col-md-4 card-yoga">
-        <div class="card border-0">
-            <a href="{{ route('proveedores.index') }}">
-                <img src="{{ asset('images/proo.jpg') }}" alt="" class="card-img-top img-fluid" />
-            </a>
-            <div class="card-body px-5 py-4">
-                <div class="d-flex pb-3 gap-3">
-                    <i class="bi bi-person" style="font-size: 2rem; color: #ff7f00;"></i>
-                    <h5 class="card-title pt-4 fs-4 fw-medium">Proveedores</h5>
+                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador'))
+                <div class="col-md-4 col-lg-3">
+                    <div class="card h-100 border-0 shadow-sm rounded-3 overflow-hidden">
+                        <div class="card-img-container">
+                            <a href="{{ route('proveedores.index') }}">
+                                <img src="{{ asset('images/proo.jpg') }}" alt="Proveedores" class="card-img-top img-fluid">
+                            </a>
+                        </div>
+                        <div class="card-body text-center p-3">
+                            <div class="d-flex align-items-center justify-content-center gap-2">
+                                <i class="bi bi-truck text-primary fs-3"></i>
+                                <h5 class="card-title fw-bold mb-0">Proveedores</h5>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
-@endif
+                @endif
 
-@if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador' ))
-    <div class="col-md-4 card-yoga">
-        <div class="card border-0">
-            <a href="{{ route('ventas.index') }}">
-                <img src="{{ asset('images/ventas.jpg') }}" alt="" class="card-img-top img-fluid" />
-            </a>
-            <div class="card-body px-5 py-4">
-                <div class="d-flex pb-3 gap-3">
-                    <i class="bi bi-person" style="font-size: 2rem; color: #ff7f00;"></i>
-                    <h5 class="card-title pt-4 fs-4 fw-medium">Ventas</h5>
+                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador'))
+                <div class="col-md-4 col-lg-3">
+                    <div class="card h-100 border-0 shadow-sm rounded-3 overflow-hidden">
+                        <div class="card-img-container">
+                            <a href="{{ route('ventas.index') }}">
+                                <img src="{{ asset('images/ventas.jpg') }}" alt="Ventas" class="card-img-top img-fluid">
+                            </a>
+                        </div>
+                        <div class="card-body text-center p-3">
+                            <div class="d-flex align-items-center justify-content-center gap-2">
+                                <i class="bi bi-cash-stack text-primary fs-3"></i>
+                                <h5 class="card-title fw-bold mb-0">Ventas</h5>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
-@endif
+                @endif
 
-@if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador' ))
-    <div class="col-md-4 card-yoga">
-        <div class="card border-0">
-            <a href="{{ route('categorias.index') }}">
-                <img src="{{ asset('images/cat.jpg') }}" alt="" class="card-img-top img-fluid" />
-            </a>
-            <div class="card-body px-5 py-4">
-                <div class="d-flex pb-3 gap-3">
-                    <i class="bi bi-person" style="font-size: 2rem; color: #ff7f00;"></i>
-                    <h5 class="card-title pt-4 fs-4 fw-medium">Categorías</h5>
+                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador'))
+                <div class="col-md-4 col-lg-3">
+                    <div class="card h-100 border-0 shadow-sm rounded-3 overflow-hidden">
+                        <div class="card-img-container">
+                            <a href="{{ route('categorias.index') }}">
+                                <img src="{{ asset('images/cat.jpg') }}" alt="Categorías" class="card-img-top img-fluid">
+                            </a>
+                        </div>
+                        <div class="card-body text-center p-3">
+                            <div class="d-flex align-items-center justify-content-center gap-2">
+                                <i class="bi bi-tags text-primary fs-3"></i>
+                                <h5 class="card-title fw-bold mb-0">Categorías</h5>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
-@endif
+                @endif
 
-@if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador' ))
-    <div class="col-md-4 card-yoga">
-        <div class="card border-0">
-            <a href="{{ route('marcas.index') }}">
-                <img src="{{ asset('images/marcas.jpg') }}" alt="" class="card-img-top img-fluid" />
-            </a>
-            <div class="card-body px-5 py-4">
-                <div class="d-flex pb-3 gap-3">
-                    <i class="bi bi-person" style="font-size: 2rem; color: #ff7f00;"></i>
-                    <h5 class="card-title pt-4 fs-4 fw-medium">Marcas</h5>
+                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador'))
+                <div class="col-md-4 col-lg-3">
+                    <div class="card h-100 border-0 shadow-sm rounded-3 overflow-hidden">
+                        <div class="card-img-container">
+                            <a href="{{ route('marcas.index') }}">
+                                <img src="{{ asset('images/marcas.jpg') }}" alt="Marcas" class="card-img-top img-fluid">
+                            </a>
+                        </div>
+                        <div class="card-body text-center p-3">
+                            <div class="d-flex align-items-center justify-content-center gap-2">
+                                <i class="bi bi-shop text-primary fs-3"></i>
+                                <h5 class="card-title fw-bold mb-0">Marcas</h5>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
-@endif
-@if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Empleado' ))
-                    <div class="col-md-4 mb-4">
-                        <div class="card border-0 shadow-sm rounded-4">
+                @endif
+
+                <!-- Sección para Empleados -->
+                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Empleado'))
+                <div class="col-md-4 col-lg-3">
+                    <div class="card h-100 border-0 shadow-sm rounded-3 overflow-hidden">
+                        <div class="card-img-container">
                             <a href="{{ route('GSM.index') }}">
-                                <img src="{{ asset('images/Socios.png') }}" alt="" class="card-img-top img-fluid rounded-3"/>
+                                <img src="{{ asset('images/Socios.png') }}" alt="Gestión de Socios" class="card-img-top img-fluid">
                             </a>
-                            <div class="card-body px-4 py-3">
-                                <div class="d-flex align-items-center pb-2 gap-2">
-                                    <i class="bi bi-person-fill" style="font-size: 2rem; color: #007BFF;"></i>
-                                    <h5 class="card-title fs-4 fw-bold text-dark mb-0">Gestion de socios</h5>
-                                </div>
+                        </div>
+                        <div class="card-body text-center p-3">
+                            <div class="d-flex align-items-center justify-content-center gap-2">
+                                <i class="bi bi-people-fill text-primary fs-3"></i>
+                                <h5 class="card-title fw-bold mb-0">Gestión de Socios</h5>
                             </div>
                         </div>
                     </div>
-                @endif
-                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Empleado' ))
-                    <div class="col-md-4 card-yoga">
-                        <div class="card border-0">
-                            <a href="{{ route('GPM.index') }}">
-                                <img src="{{ asset('images/proo.jpg') }}" alt="" class="card-img-top img-fluid" />
-                            </a>
-                            <div class="card-body px-5 py-4">
-                                <div class="d-flex pb-3 gap-3">
-                                    <i class="bi bi-person" style="font-size: 2rem; color: #ff7f00;"></i>
-                                    <h5 class="card-title pt-4 fs-4 fw-medium">Proveedores</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endif
-
-
-                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Empleado' ))
-                    <div class="col-md-4 mb-4">
-                        <div class="card border-0 shadow-sm rounded-4">
-                            <a href="{{ route('GESP.index') }}">
-                                <img src="{{ asset('images/Pedidos.jpg') }}" alt="" class="card-img-top img-fluid rounded-3"/>
-                            </a>
-                            <div class="card-body px-4 py-3">
-                                <div class="d-flex align-items-center pb-2 gap-2">
-                                    <i class="bi bi-cart" style="font-size: 2rem; color: #007BFF;"></i>
-                                    <h5 class="card-title fs-4 fw-bold text-dark mb-0">Pedidos</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endif
-
-
-                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Empleado' ))
-    <div class="col-md-4 card-yoga">
-        <div class="card border-0">
-            <a href="{{ route('ventas.index') }}">
-                <img src="{{ asset('images/ventas.jpg') }}" alt="" class="card-img-top img-fluid" />
-            </a>
-            <div class="card-body px-5 py-4">
-                <div class="d-flex pb-3 gap-3">
-                    <i class="bi bi-person" style="font-size: 2rem; color: #ff7f00;"></i>
-                    <h5 class="card-title pt-4 fs-4 fw-medium">Gestion de Ventas</h5>
                 </div>
-            </div>
-        </div>
-    </div>
-@endif
+                @endif
 
+                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Empleado'))
+                <div class="col-md-4 col-lg-3">
+                    <div class="card h-100 border-0 shadow-sm rounded-3 overflow-hidden">
+                        <div class="card-img-container">
+                            <a href="{{ route('GPM.index') }}">
+                                <img src="{{ asset('images/proo.jpg') }}" alt="Proveedores" class="card-img-top img-fluid">
+                            </a>
+                        </div>
+                        <div class="card-body text-center p-3">
+                            <div class="d-flex align-items-center justify-content-center gap-2">
+                                <i class="bi bi-truck text-primary fs-3"></i>
+                                <h5 class="card-title fw-bold mb-0">Proveedores</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Empleado'))
+                <div class="col-md-4 col-lg-3">
+                    <div class="card h-100 border-0 shadow-sm rounded-3 overflow-hidden">
+                        <div class="card-img-container">
+                            <a href="{{ route('GESP.index') }}">
+                                <img src="{{ asset('images/Pedidos.jpg') }}" alt="Pedidos" class="card-img-top img-fluid">
+                            </a>
+                        </div>
+                        <div class="card-body text-center p-3">
+                            <div class="d-flex align-items-center justify-content-center gap-2">
+                                <i class="bi bi-cart text-primary fs-3"></i>
+                                <h5 class="card-title fw-bold mb-0">Pedidos</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Empleado'))
+                <div class="col-md-4 col-lg-3">
+                    <div class="card h-100 border-0 shadow-sm rounded-3 overflow-hidden">
+                        <div class="card-img-container">
+                            <a href="{{ route('ventas.index') }}">
+                                <img src="{{ asset('images/ventas.jpg') }}" alt="Gestión de Ventas" class="card-img-top img-fluid">
+                            </a>
+                        </div>
+                        <div class="card-body text-center p-3">
+                            <div class="d-flex align-items-center justify-content-center gap-2">
+                                <i class="bi bi-cash-stack text-primary fs-3"></i>
+                                <h5 class="card-title fw-bold mb-0">Gestión de Ventas</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endif
             </div>
         </div>
     </section>
 @endsection
+
+<style>
+    .dashboard {
+        padding: 2rem 0;
+    }
+    
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+    }
+    
+    .card-img-container {
+        height: 180px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #f8f9fa;
+    }
+    
+    .card-img-top {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+    
+    .card:hover .card-img-top {
+        transform: scale(1.05);
+    }
+    
+    .card-body {
+        background-color: white;
+    }
+    
+    .card-title {
+        font-size: 1.1rem;
+    }
+    
+    @media (max-width: 768px) {
+        .card-img-container {
+            height: 150px;
+        }
+    }
+</style>
