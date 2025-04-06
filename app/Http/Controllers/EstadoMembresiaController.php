@@ -4,11 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\Estado_Membresia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EstadoMembresiaController extends Controller
 {
-      // Mostrar todos los estados de membresía
-      public function index()
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            if (Auth::user()->persona->rol->nom_rol !== 'Administrador') {
+                return response()->view('denegado', [], 403);
+            }
+            return $next($request);
+        });
+    }      public function index()
       {
           $estadosMembresias = Estado_Membresia::all();
           return view('estado_membresias.index', compact('estadosMembresias'));

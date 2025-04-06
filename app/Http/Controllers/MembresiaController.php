@@ -7,12 +7,21 @@ use App\Models\Membresia;
 use App\Models\Socio;
 use App\Models\Plan;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 use Carbon\Carbon; 
 class MembresiaController extends Controller
 {
-    // Mostrar lista de membresías
-    public function index()
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            if (Auth::user()->persona->rol->nom_rol !== 'Administrador') {
+                return response()->view('denegado', [], 403);
+            }
+            return $next($request);
+        });
+    }    public function index()
     {
         $membresias = Membresia::with(['socio', 'plan'])->get();
         $socios = Socio::all();

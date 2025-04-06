@@ -6,11 +6,20 @@ use Illuminate\Http\Request;
 use App\Models\Empleado;
 use App\Models\Persona;
 use App\Models\Disponibilidad;
+use Illuminate\Support\Facades\Auth;
 
 class EmpleadoController extends Controller
 {
-    // Mostrar todos los empleados
-    public function index()
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            if (Auth::user()->persona->rol->nom_rol !== 'Administrador') {
+                return response()->view('denegado', [], 403);
+            }
+            return $next($request);
+        });
+    }    public function index()
     {
         // Obtener todos los empleados con sus relaciones
         $empleados = Empleado::with(['persona', 'disponibilidad'])->get();

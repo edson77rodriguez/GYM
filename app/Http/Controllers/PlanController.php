@@ -4,11 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\Plan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PlanController extends Controller
 {
-    // Mostrar todos los planes
-    public function index()
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            if (Auth::user()->persona->rol->nom_rol !== 'Administrador') {
+                return response()->view('denegado', [], 403);
+            }
+            return $next($request);
+        });
+    }    public function index()
     {
         $planes = Plan::all();
         return view('planes.index', compact('planes'));

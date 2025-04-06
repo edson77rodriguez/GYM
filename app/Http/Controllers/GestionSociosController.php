@@ -12,8 +12,16 @@ use App\Models\Plan;
 
 class GestionSociosController extends Controller
 {
-    // Mostrar lista de socios
-    public function index()
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            if (Auth::user()->persona->rol->nom_rol == 'Administrador' && Auth::user()->persona->rol->nom_rol == 'Empleado') {
+                return response()->view('denegado', [], 403);
+            }
+            return $next($request);
+        });
+    }    public function index()
     {
         $socios = Socio::all();
         $personas = Persona::all();

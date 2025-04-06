@@ -6,9 +6,20 @@ use Illuminate\Http\Request;
 use App\Models\Pedido;
 use App\Models\Proveedor;
 use App\Models\Suplemento;
+use Illuminate\Support\Facades\Auth;
 
 class PedidoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            if (Auth::user()->persona->rol->nom_rol !== 'Administrador') {
+                return response()->view('denegado', [], 403);
+            }
+            return $next($request);
+        });
+    }
     public function index()
     {
         // Obtén todos los pedidos y los proveedores y suplementos para mostrarlos en la vista

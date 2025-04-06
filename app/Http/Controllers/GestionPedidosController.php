@@ -6,9 +6,20 @@ use App\Models\Pedido;
 use App\Models\Proveedor;
 use App\Models\Suplemento;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class GestionPedidosController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            if (Auth::user()->persona->rol->nom_rol == 'Administrador' && Auth::user()->persona->rol->nom_rol == 'Empleado') {
+                return response()->view('denegado', [], 403);
+            }
+            return $next($request);
+        });
+    }
     public function index()
     {
         $pedidos = Pedido::with('proveedor.persona', 'suplemento')->get();

@@ -7,11 +7,20 @@ use App\Models\Equipo;
 use App\Models\Empleado;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class MantenimientoController extends Controller
 {
-    // Mostrar lista de mantenimientos
-    public function index()
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            if (Auth::user()->persona->rol->nom_rol == 'Administrador' && Auth::user()->persona->rol->nom_rol == 'Empleado') {
+                return response()->view('denegado', [], 403);
+            }
+            return $next($request);
+        });
+    }    public function index()
     {
         $mantenimientos = Mantenimiento::with(['equipo', 'empleado'])->get();
         $equipos = Equipo::all();

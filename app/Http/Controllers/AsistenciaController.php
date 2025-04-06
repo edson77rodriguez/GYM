@@ -6,9 +6,20 @@ use Illuminate\Http\Request;
 use App\Models\Asistencia;
 use App\Models\Socio;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class AsistenciaController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            if (Auth::user()->persona->rol->nom_rol !== 'Administrador') {
+                return response()->view('denegado', [], 403);
+            }
+            return $next($request);
+        });
+    }
     // Mostrar todas las asistencias
     public function index()
     {

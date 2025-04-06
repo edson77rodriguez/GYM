@@ -106,7 +106,7 @@ class RegisterController extends Controller
                 $data['desc_rol'],  
             ]);
     
-            // Obtener el ID de la persona recién creada
+            // Obtener el ID de la persona recién creadaz
             $id_persona = DB::table('personas')
                 ->where('correo', $data['correo'])  
                 ->value('id_persona');

@@ -7,11 +7,21 @@ use App\Models\Socio;
 use App\Models\Persona;
 use App\Models\Estado_Membresia;
 use Carbon\Carbon; 
+use Illuminate\Support\Facades\Auth;
 
 class SocioController extends Controller
 {
-    // Mostrar lista de socios
-    public function index()
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            if (Auth::user()->persona->rol->nom_rol !== 'Administrador') {
+                return response()->view('denegado', [], 403);
+            }
+            return $next($request);
+        });
+    }   
+     public function index()
     {
         $socios = Socio::all();
         $personas = Persona::all();

@@ -6,11 +6,20 @@ use Illuminate\Http\Request;
 use App\Models\Proveedor;
 use App\Models\Persona;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class GestionProveedoresController extends Controller
 {
-    // Mostrar lista de proveedores
-    public function index()
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            if (Auth::user()->persona->rol->nom_rol == 'Administrador' && Auth::user()->persona->rol->nom_rol == 'Empleado') {
+                return response()->view('denegado', [], 403);
+            }
+            return $next($request);
+        });
+    }    public function index()
     {
         $proveedores = Proveedor::all();
         $personas = Persona::all();

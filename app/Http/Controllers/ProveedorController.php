@@ -5,11 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Proveedor;
 use App\Models\Persona;
+use Illuminate\Support\Facades\Auth;
 
 class ProveedorController extends Controller
 {
-    // Mostrar todos los proveedores
-    public function index()
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            if (Auth::user()->persona->rol->nom_rol !== 'Administrador') {
+                return response()->view('denegado', [], 403);
+            }
+            return $next($request);
+        });
+    }    public function index()
     {
         $proveedores = Proveedor::with('persona')->get();
         $personas = Persona::all();
