@@ -12,12 +12,12 @@ class EstadoMembresiaController extends Controller
     {
         $this->middleware('auth');
         $this->middleware(function ($request, $next) {
-            if (Auth::user()->persona->rol->nom_rol !== 'Administrador') {
+            if (Auth::user()->persona->rol->id_rol == 2 || Auth::user()->persona->rol->id_rol == 4 ) {
                 return response()->view('denegado', [], 403);
             }
             return $next($request);
         });
-    }      public function index()
+    }     public function index()
       {
           $estadosMembresias = Estado_Membresia::all();
           return view('estado_membresias.index', compact('estadosMembresias'));

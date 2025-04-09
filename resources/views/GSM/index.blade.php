@@ -151,15 +151,15 @@
                         <input type="text" name="am" id="am" class="form-control">
                     </div>
                     <div class="mb-3">
-                        <label for="telefono" class="form-label">TelÃ©fono</label>
+                        <label for="telefono" class="form-label">Telefono</label>
                         <input type="text" name="telefono" id="telefono" class="form-control" required>
                     </div>
                     <div class="mb-3">
-                        <label for="correo" class="form-label">Correo ElectrÃ³nico</label>
+                        <label for="correo" class="form-label">Correo Electronico</label>
                         <input type="email" name="correo" id="correo" class="form-control" required>
                     </div>
                     <div class="mb-3">
-                        <label for="fecha_inscripcion" class="form-label">Fecha de InscripciÃ³n</label>
+                        <label for="fecha_inscripcion" class="form-label">Fecha de Inscripcion</label>
                         <input type="date" name="fecha_inscripcion" class="form-control" required>
                     </div>
                     <div class="modal-footer">

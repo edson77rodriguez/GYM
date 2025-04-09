@@ -16,12 +16,12 @@ class GestionSociosController extends Controller
     {
         $this->middleware('auth');
         $this->middleware(function ($request, $next) {
-            if (Auth::user()->persona->rol->nom_rol == 'Administrador' && Auth::user()->persona->rol->nom_rol == 'Empleado') {
+            if (Auth::user()->persona->rol->id_rol == 2 || Auth::user()->persona->rol->id_rol == 4 ) {
                 return response()->view('denegado', [], 403);
             }
             return $next($request);
         });
-    }    public function index()
+    }   public function index()
     {
         $socios = Socio::all();
         $personas = Persona::all();

@@ -89,11 +89,11 @@
                             <input type="text" name="am" id="am" class="form-control">
                         </div>
                         <div class="mb-3">
-                            <label for="telefono" class="form-label">Teléfono</label>
+                            <label for="telefono" class="form-label">Telefono</label>
                             <input type="text" name="telefono" id="telefono" class="form-control" required>
                         </div>
                         <div class="mb-3">
-                            <label for="correo" class="form-label">Correo Electrónico</label>
+                            <label for="correo" class="form-label">Correo Electronico</label>
                             <input type="email" name="correo" id="correo" class="form-control" required>
                         </div>
                         <div class="mb-3">
