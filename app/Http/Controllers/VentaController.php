@@ -24,8 +24,11 @@ class VentaController extends Controller
     }
     public function index()
     {
-        $ventas = Venta::with(['socio', 'detallesVentas.suplemento'])->get();
-        $socios = Socio::all();
+        $ventas = Venta::with(['socio.persona', 'detallesVentas.suplemento'])
+                    ->orderBy('fecha_venta', 'desc')
+                    ->paginate(10); // 10 items por página
+    
+        $socios = Socio::with('persona')->get();
         $suplementos = Suplemento::all();
     
         return view('ventas.index', compact('ventas', 'socios', 'suplementos'));

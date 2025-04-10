@@ -83,8 +83,20 @@ Route::resource('categorias', CategoriaController::class);
 
 Route::resource('GSM', GestionSociosController::class);
 Route::resource('GPM', GestionProveedoresController::class);
-Route::resource('GESP', GestionPedidosController::class);
-
+Route::resource('GESP', GestionPedidosController::class)->names([
+    'index' => 'GESP.index',
+    'store' => 'GESP.store',
+    'update' => 'GESP.update',
+    'destroy' => 'GESP.destroy'
+]);
+Route::prefix('GESP')->group(function() {
+    Route::get('/search', [GestionPedidosController::class, 'search'])->name('GESP.search');
+    Route::get('/checkLowStock', [GestionPedidosController::class, 'checkLowStock'])->name('GESP.checkLowStock');
+});
+Route::post('GESP/{pedido}/recibir', [GestionPedidosController::class, 'recibir'])
+    ->name('GESP.recibir');
+    Route::resource('GPM', GestionProveedoresController::class);
+Route::get('GPM/{proveedor}/edit', [GestionProveedoresController::class, 'edit'])->name('GPM.edit');
 
 
 

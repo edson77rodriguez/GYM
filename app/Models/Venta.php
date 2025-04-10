@@ -17,6 +17,9 @@ class Venta extends Model
         'monto',
     ];
 
+    protected $casts = [
+        'fecha_venta' => 'datetime',
+    ];
     public function socio()
     {
         return $this->belongsTo(Socio::class, 'id_socio');
