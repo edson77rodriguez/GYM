@@ -20,4 +20,9 @@ class Plan extends Model
     {
         return $this->hasMany(Membresia::class, 'id_plan');
     }
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        // cualquier otro campo de fecha
+    ];
 }

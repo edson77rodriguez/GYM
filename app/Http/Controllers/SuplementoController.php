@@ -23,8 +23,11 @@ class SuplementoController extends Controller
     }   
     public function index()
     {
-        
-        $suplementos = Suplemento::all();
+        // En tu controlador, cambia esto:
+$suplementos = Suplemento::all();
+
+// Por esto:
+$suplementos = Suplemento::paginate(12); // 12 items por página
         $categorias = Categoria::all();
         $marcas = Marca::all();
         return view('suplementos.index', compact('suplementos', 'categorias', 'marcas'));

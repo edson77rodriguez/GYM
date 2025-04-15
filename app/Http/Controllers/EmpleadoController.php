@@ -19,13 +19,15 @@ class EmpleadoController extends Controller
             }
             return $next($request);
         });
-    }   public function index()
+    }  public function index()
     {
-        // Obtener todos los empleados con sus relaciones
-        $empleados = Empleado::with(['persona', 'disponibilidad'])->get();
+        $empleados = Empleado::with(['persona', 'disponibilidad'])
+                           ->orderBy('created_at', 'desc')
+                           ->paginate(8); // 8 items por página
+    
         $personas = Persona::all();
         $disponibilidades = Disponibilidad::all();
-
+    
         return view('empleados.index', compact('empleados', 'personas', 'disponibilidades'));
     }
 

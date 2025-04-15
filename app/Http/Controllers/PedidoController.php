@@ -19,12 +19,15 @@ class PedidoController extends Controller
             }
             return $next($request);
         });
-    } 
+    }
+
     public function index()
     {
-        // Obtén todos los pedidos y los proveedores y suplementos para mostrarlos en la vista
-        $pedidos = Pedido::all();
-        $proveedores = Proveedor::all();
+        $pedidos = Pedido::with(['proveedor.persona', 'suplemento'])
+                       ->orderBy('fecha_pedido', 'desc')
+                       ->paginate(8); // 8 items por página
+
+        $proveedores = Proveedor::with('persona')->get();
         $suplementos = Suplemento::all();
 
         return view('pedidos.index', compact('pedidos', 'proveedores', 'suplementos'));
@@ -32,7 +35,6 @@ class PedidoController extends Controller
 
     public function store(Request $request)
     {
-        // Validación de los datos
         $validatedData = $request->validate([
             'id_proveedor' => 'required|exists:proveedores,id_proveedor',
             'id_suplemento' => 'required|exists:suplementos,id_suplemento',
@@ -40,16 +42,14 @@ class PedidoController extends Controller
             'fecha_pedido' => 'required|date',
         ]);
 
-        // Crear el pedido
         Pedido::create($validatedData);
 
-        // Redirigir con un mensaje de éxito
-        return redirect()->route('pedidos.index')->with('success', 'Pedido creado correctamente.');
+        return redirect()->route('pedidos.index')
+                         ->with('success', 'Pedido creado correctamente.');
     }
 
     public function update(Request $request, Pedido $pedido)
     {
-        // Validación de los datos
         $validatedData = $request->validate([
             'id_proveedor' => 'required|exists:proveedores,id_proveedor',
             'id_suplemento' => 'required|exists:suplementos,id_suplemento',
@@ -57,19 +57,17 @@ class PedidoController extends Controller
             'fecha_pedido' => 'required|date',
         ]);
 
-        // Actualizar el pedido
         $pedido->update($validatedData);
 
-        // Redirigir con un mensaje de éxito
-        return redirect()->route('pedidos.index')->with('success', 'Pedido actualizado correctamente.');
+        return redirect()->route('pedidos.index')
+                         ->with('success', 'Pedido actualizado correctamente.');
     }
 
     public function destroy(Pedido $pedido)
     {
-        // Eliminar el pedido
         $pedido->delete();
 
-        // Redirigir con un mensaje de éxito
-        return redirect()->route('pedidos.index')->with('success', 'Pedido eliminado correctamente.');
+        return redirect()->route('pedidos.index')
+                         ->with('success', 'Pedido eliminado correctamente.');
     }
 }
