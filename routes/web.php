@@ -18,6 +18,7 @@ use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\VentaController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\MarcaController;
+use App\Http\Controllers\GestionMantenimientoController;
 
 use App\Http\Controllers\GestionSociosController;
 
@@ -55,7 +56,6 @@ Route::delete('/mantenimientos/{mantenimiento}', [MantenimientoController::class
 
 Route::resource('pedidos', PedidoController::class);
 Route::delete('/pedidos/{pedido}', [PedidoController::class, 'destroy'])->name('pedidos.destroy');
-
 Route::resource('empleados', EmpleadoController::class);
 Route::delete('/empleados/{empleado}', [EmpleadoController::class, 'destroy'])->name('empleados.destroy');
 
@@ -98,7 +98,14 @@ Route::post('GESP/{pedido}/recibir', [GestionPedidosController::class, 'recibir'
     Route::resource('GPM', GestionProveedoresController::class);
 Route::get('GPM/{proveedor}/edit', [GestionProveedoresController::class, 'edit'])->name('GPM.edit');
 
-
+Route::prefix('gestion-mantenimiento')->group(function() {
+    Route::get('/', [GestionMantenimientoController::class, 'index'])->name('gestion-mantenimiento.index');
+    Route::post('/', [GestionMantenimientoController::class, 'store'])->name('gestion-mantenimiento.store');
+    Route::get('/{mantenimiento}', [GestionMantenimientoController::class, 'show'])->name('gestion-mantenimiento.show');
+    Route::put('/{mantenimiento}', [GestionMantenimientoController::class, 'update'])->name('gestion-mantenimiento.update');
+    Route::delete('/{mantenimiento}', [GestionMantenimientoController::class, 'destroy'])->name('gestion-mantenimiento.destroy');
+    Route::get('/calendar', [GestionMantenimientoController::class, 'calendar'])->name('gestion-mantenimiento.calendar');
+});
 
 
 

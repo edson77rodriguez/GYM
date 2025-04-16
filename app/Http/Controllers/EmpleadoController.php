@@ -64,12 +64,17 @@ class EmpleadoController extends Controller
     }
 
     // Eliminar un empleado
-    public function destroy(Empleado $empleado)
-    {
-        // Eliminar el empleado
+    public function destroy($id)
+{
+    try {
+        $empleado = Empleado::findOrFail($id);
         $empleado->delete();
 
-        // Redirigir con mensaje de éxito
-        return redirect()->route('empleados.index')->with('success', 'Empleado eliminado correctamente.');
+        return redirect()->route('empleados.index')
+                        ->with('success', 'Empleado eliminado correctamente');
+    } catch (\Exception $e) {
+        return redirect()->route('empleados.index')
+                        ->with('error', 'No se pudo eliminar el empleado');
     }
+}
 }

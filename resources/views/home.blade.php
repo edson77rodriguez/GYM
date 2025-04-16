@@ -79,7 +79,7 @@
                 </div>
                 @endif
 
-                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador'))
+                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador') || Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Empleado'))
                 <div class="col-md-4 col-lg-3">
                     <div class="card h-100 border-0 shadow-sm rounded-3 overflow-hidden">
                         <div class="card-img-container">
@@ -169,7 +169,7 @@
                 </div>
                 @endif
 
-                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador'))
+                @if(Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Administrador') || Auth::check() && (Auth::user()->persona->rol->desc_rol == 'Empleado'))
                 <div class="col-md-4 col-lg-3">
                     <div class="card h-100 border-0 shadow-sm rounded-3 overflow-hidden">
                         <div class="card-img-container">
@@ -331,6 +331,8 @@
                     </div>
                 </div>
                 @endif
+
+           
             </div>
         </div>
     </section>

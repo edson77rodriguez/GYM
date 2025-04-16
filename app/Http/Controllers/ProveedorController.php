@@ -18,11 +18,11 @@ class ProveedorController extends Controller
             }
             return $next($request);
         });
-    }    public function index()
+    }   public function index()
     {
-        $proveedores = Proveedor::with('persona')->get();
+        $proveedores = Proveedor::with('persona')->paginate(10); // Paginar en lugar de get()
         $personas = Persona::all();
-
+    
         return view('proveedores.index', compact('proveedores', 'personas'));
     }
 

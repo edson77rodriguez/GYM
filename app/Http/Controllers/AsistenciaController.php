@@ -14,18 +14,18 @@ class AsistenciaController extends Controller
     {
         $this->middleware('auth');
         $this->middleware(function ($request, $next) {
-            if (Auth::user()->persona->rol->id_rol !== 1) {
+            if (Auth::user()->persona->rol->id_rol == 2 || Auth::user()->persona->rol->id_rol == 4 ) {
                 return response()->view('denegado', [], 403);
             }
             return $next($request);
         });
-    } 
+    }
     // Mostrar todas las asistencias
     public function index()
     {
-        $asistencias = Asistencia::with('socio')->get();
+        $asistencias = Asistencia::with('socio')->paginate(15); // 15 elementos por página
         $socios = Socio::all();
-
+    
         return view('asistencias.index', compact('asistencias', 'socios'));
     }
 

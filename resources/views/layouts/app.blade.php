@@ -1,238 +1,297 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="{{ asset('images/favicon.ico') }}" type="image/x-icon">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- SweetAlert2 CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-    <title>Gym | Bienvenido</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">    
+    <title>@yield('template_title', 'GYM DRAGON')</title>
+    
     <style>
-        /* General Styles */
+        :root {
+            --dragon-red: #d62828;
+            --dragon-dark: #003049;
+            --dragon-gold: #f77f00;
+            --dragon-light: #eae2b7;
+            --header-height: 70px;
+        }
+        
         body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;  /* Asegura que el body ocupe toda la altura de la ventana */
-}
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding-top: var(--header-height);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: #f5f5f5;
+        }
+
+        /* Navbar estilo Gym Dragon */
+        .navbar {
+            background: linear-gradient(135deg, var(--dragon-dark), var(--dragon-red));
+            height: var(--header-height);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1030;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
 
         .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: white;
             display: flex;
             flex-direction: column;
             align-items: center;
-            text-align: center;
+            font-weight: 700;
+            color: white;
+            margin: 0 1rem;
+            line-height: 1.2;
         }
-
-        .logo span {
-            font-size: 0.9rem;
-            color: #f8f9fa;
+        
+        .logo-main {
+            font-size: 1.4rem;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
         }
-
-        .logo a img {
-            width: 60px; /* Adjust logo size */
-            margin-top: 5px;
-        }
-
-        /* Navigation */
-        .navbar {
-            background-color: #ff7f00; /* Naranja */
+        
+        .logo-sub {
+            font-size: 0.7rem;
+            color: var(--dragon-light);
+            letter-spacing: 0.5px;
         }
 
         .navbar-brand img {
-            max-width: 100px;
-            height: auto;
+            max-height: 40px;
+            width: auto;
+            transition: transform 0.3s ease;
         }
 
-        .navbar-toggler {
-            background-color: #343a40;
-            border: none;
-            color: white;
-            font-size: 1.5rem;
+        .navbar-brand:hover img {
+            transform: scale(1.05);
         }
 
-        .navbar-nav .nav-item .nav-link {
-            color: white;
+        .nav-link {
+            color: white !important;
+            font-weight: 500;
+            margin: 0 0.5rem;
+            position: relative;
+            padding: 0.5rem 1rem !important;
         }
-
-        .navbar-nav .nav-item .nav-link:hover {
-            color: #f8f9fa;
-        }
-
-        /* Sidebar */
-        #sidebar {
-            position: fixed;
-            top: 0;
-            left: -250px;
-            width: 250px;
-            height: 100%;
-            background-color: #333;
-            transition: all 0.3s;
-            z-index: 999;
-            padding-top: 50px;
-            color: white;
-        }
-
-        #sidebar ul {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        #sidebar ul li {
-            padding: 15px;
-            text-align: left;
-        }
-
-        #sidebar ul li a {
-            color: white;
-            text-decoration: none;
-            font-size: 1.1rem;
-        }
-
-        #sidebar ul li a:hover {
-            background-color: #575757;
-            border-radius: 5px;
-        }
-
-        .container.sidebar-active {
-            margin-left: 250px;
-        }
-
-        #sidebar.active {
+        
+        .nav-link:before {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
             left: 0;
+            background-color: var(--dragon-gold);
+            visibility: hidden;
+            transition: all 0.3s ease-in-out;
+        }
+        
+        .nav-link:hover:before {
+            visibility: visible;
+            width: 100%;
+        }
+
+        /* Estilos para el dropdown de usuario */
+        .dropdown-menu {
+            background: linear-gradient(135deg, var(--dragon-dark), var(--dragon-red));
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            overflow: hidden;
+            min-width: 200px;
+        }
+
+        .dropdown-item {
+            color: white !important;
+            padding: 0.6rem 1.2rem;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .dropdown-item:hover {
+            background-color: rgba(255, 255, 255, 0.1) !important;
+            padding-left: 1.5rem;
+            color: var(--dragon-gold) !important;
+        }
+
+        /* Botón de login */
+        .btn-dragon {
+            background-color: var(--dragon-gold);
+            color: white;
+            font-weight: 600;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-dragon:hover {
+            background-color: #e67300;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            color: white;
+        }
+
+        /* Contenido principal */
+        main.container {
+            flex: 1;
+            padding-top: 20px;
+            padding-bottom: 40px;
+            margin-top: calc(var(--header-height) + 10px);
         }
 
         /* Footer */
         footer {
-    padding: 20px;
-    background-color: #ff7f00;
-    color: white;
-    text-align: center;
-}
-.container {
-    flex: 1;  /* El contenedor ocupa el espacio restante */
-}
-
-        footer .social-icons a {
+            padding: 15px 0;
+            background: linear-gradient(135deg, var(--dragon-dark), var(--dragon-red));
             color: white;
-            margin: 0 10px;
-            font-size: 1.5rem;
+            text-align: center;
         }
 
-        footer .social-icons a:hover {
-            color: gray; /* Naranja */
-        }
-
-        footer .footer-links a {
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
             color: white;
-            text-decoration: none;
-            margin: 0 5px;
+            margin-right: 10px;
+            transition: all 0.3s;
         }
 
-        footer .footer-links a:hover {
-            color: gray; /* Naranja */
+        .social-icons a:hover {
+            background: var(--dragon-gold);
+            transform: translateY(-3px);
         }
 
+        /* Responsividad */
+        @media (max-width: 768px) {
+            .logo-main {
+                font-size: 1.2rem;
+            }
+            
+            .logo-sub {
+                font-size: 0.6rem;
+            }
+            
+            .navbar-brand img {
+                max-height: 35px;
+            }
+        }
     </style>
+    
+    @stack('styles')
 </head>
 <body>
-<!-- Navigation -->
-<nav class="navbar navbar-expand-md py-2">
-    <div class="container">
-        <a href="#" class="navbar-brand">
-            <img src="{{ asset('images/dragonesgym.png') }}" alt="Logo" />
-        </a>
-        <div class="logo">
-            GYM DRAGON
-            <span>Valle de Bravo · Edo.Mex</span>
-        </div>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div id="navbarNav" class="collapse navbar-collapse">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a href="#" class="nav-link">Inicio</a>
-                </li>
-       
-                @auth
-                    <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            {{ Auth::user()->name }}
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('logout') }}"
-                               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                Cerrar Sesion
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a href="{{ route('home') }}" class="navbar-brand py-0">
+                <img src="{{ asset('images/dragonesgym.png') }}" alt="Logo GYM DRAGON" />
+            </a>
+            
+            <div class="logo py-0">
+                <span class="logo-main">GYM DRAGON</span>
+                <span class="logo-sub">Valle de Bravo · Edo.Mex</span>
+            </div>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a href="{{ route('home') }}" class="nav-link">Inicio</a>
+                    </li>
+                    
+                    @auth
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" data-bs-toggle="dropdown">
+                                <i class="fas fa-user-circle me-2" style="font-size: 1.2rem;"></i>
+                                <span>{{ Auth::user()->name }}</span>
                             </a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
-                        </div>
-                    </li>
-                @else
-                    <li class="nav-item">
-                        <a class="btn btn-info rounded-1 me-2" href="{{ route('login') }}">Iniciar Sesion</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="btn btn-info rounded-1" href="{{ route('register') }}">Registrarse</a>
-                    </li>
-                @endauth
-            </ul>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        <i class="fas fa-sign-out-alt me-1"></i> Cerrar Sesión
+                                    </a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+                                </li>
+                               
+                            </ul>
+                        </li>
+                    @else
+                        <li class="nav-item">
+                            <a class="btn btn-dragon me-2" href="{{ route('login') }}">
+                                <i class="fas fa-sign-in-alt me-1"></i> Ingresar
+                            </a>
+                        </li>
+                    @endauth
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
+    <!-- Contenido principal -->
+    <main class="container">
+        @yield('content')
+    </main>
 
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="social-icons mb-2">
+                <a href="#" class="text-white mx-2"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="text-white mx-2"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="text-white mx-2"><i class="fab fa-whatsapp"></i></a>
+            </div>
+            <small class="text-white">
+                &copy; {{ date('Y') }} GYM DRAGON. Todos los derechos reservados.
+            </small>
+        </div>
+    </footer>
 
-<!-- Main Content -->
-<div class="container">
-    @yield('content')
-</div>
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function() {
+            // Mejorar el dropdown
+            $('.dropdown').hover(function() {
+                $(this).find('.dropdown-menu').stop(true, true).delay(100).fadeIn(200);
+            }, function() {
+                $(this).find('.dropdown-menu').stop(true, true).delay(100).fadeOut(200);
+            });
 
-<!-- Footer -->
-<footer>
-    <p class="mb-2">
-        GYM DRAGON
-        <span>Valle de Bravo · Edo.Mex</span>
-    </p>
-    <div class="social-icons">
-        <a href="#"><i class="bi bi-envelope"></i></a>
-        <a href="#"><i class="bi bi-whatsapp"></i></a>
-        <a href="#"><i class="bi bi-facebook"></i></a>
-        <a href="#"><i class="bi bi-instagram"></i></a>
-    </div>
-    <p class="mt-2 footer-links">
-        <a href="#">Aviso de privacidad</a> ·
-        <a href="#">Políticas de Desarrollo</a>
-    </p>
-    <small>2025 © Desarrollado Por CDN</small>
-</footer>
-
-<!-- Bootstrap JS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-<script>
-    // Sidebar toggle functionality
-    document.getElementById('sidebarToggle').addEventListener('click', function () {
-        var sidebar = document.getElementById('sidebar');
-        sidebar.classList.toggle('active');
-        document.body.classList.toggle('sidebar-active');
-    });
-</script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- Bootstrap JS Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js">
-@stack('scripts')
+            // Animación para el botón de cerrar sesión
+            $('.dropdown-item[href="{{ route('logout') }}"]').hover(
+                function() {
+                    $(this).find('i').css('transform', 'rotate(180deg)');
+                },
+                function() {
+                    $(this).find('i').css('transform', 'rotate(0deg)');
+                }
+            );
+        });
+    </script>
+    @stack('scripts')
 </body>
 </html>

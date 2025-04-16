@@ -19,7 +19,7 @@ class MarcaController extends Controller
         });
     }    public function index()
     {
-        $marcas = Marca::all();
+        $marcas = Marca::paginate(10); // 10 items por página (ajusta según necesites)
         return view('marcas.index', compact('marcas'));
     }
 

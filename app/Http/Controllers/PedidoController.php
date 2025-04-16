@@ -65,9 +65,28 @@ class PedidoController extends Controller
 
     public function destroy(Pedido $pedido)
     {
-        $pedido->delete();
-
-        return redirect()->route('pedidos.index')
-                         ->with('success', 'Pedido eliminado correctamente.');
+        try {
+            $pedido->delete();
+            
+            if(request()->ajax()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Pedido eliminado correctamente'
+                ]);
+            }
+            
+            return redirect()->route('pedidos.index')
+                             ->with('success', 'Pedido eliminado correctamente');
+        } catch (\Exception $e) {
+            if(request()->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error al eliminar el pedido'
+                ], 500);
+            }
+            
+            return redirect()->route('pedidos.index')
+                             ->with('error', 'Error al eliminar el pedido');
+        }
     }
 }
